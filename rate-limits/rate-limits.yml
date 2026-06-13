@@ -1,0 +1,67 @@
+name: Openverse API Rate Limits
+description: >
+  The Openverse API enforces three throttling tiers based on authentication
+  status. Anonymous users are limited to 1 request per second. Registered
+  OAuth2 applications receive the standard tier with meaningfully higher limits.
+  Enhanced limits are selectively granted by the Openverse team for trusted,
+  high-volume integrations. Rate limit information is returned in response headers.
+url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+rateLimits:
+  - name: Anonymous Tier
+    description: >
+      Applied to unauthenticated requests. Throttled at 1 request per second.
+      Page size capped at 20 results. Any page_size > 20 without authentication
+      returns a 401 Unauthorized response.
+    throttle: 1 request per second
+    maxPageSize: 20
+    authentication: None
+    headers:
+      - name: X-RateLimit-Limit
+        description: Maximum requests allowed in the current window
+      - name: X-RateLimit-Remaining
+        description: Remaining requests in the current window
+      - name: X-RateLimit-Reset
+        description: Unix timestamp when the current window resets
+
+  - name: Standard Tier
+    description: >
+      Default tier for registered OAuth2 applications. Provides a higher and
+      more practical rate limit than anonymous access. Automatically granted
+      upon successful OAuth2 registration. Rate limits are enforced per client ID
+      using cache-backed throttle classes.
+    throttle: Higher than anonymous (exact values set in server configuration)
+    maxPageSize: 500
+    authentication: OAuth2 Bearer Token
+    headers:
+      - name: X-RateLimit-Limit
+        description: Maximum requests allowed in the current window
+      - name: X-RateLimit-Remaining
+        description: Remaining requests in the current window
+      - name: X-RateLimit-Reset
+        description: Unix timestamp when the current window resets
+
+  - name: Enhanced Tier
+    description: >
+      Selectively granted tier for high-volume integrations. Provides significantly
+      higher burst and sustained request rates. Must be requested from and approved
+      by the Openverse team. Typically reserved for large platforms, institutional
+      partners, or trusted ecosystem integrations.
+    throttle: Significantly higher burst and sustained rates (exact values not published)
+    maxPageSize: 500
+    authentication: OAuth2 Bearer Token (with enhanced grant)
+    headers:
+      - name: X-RateLimit-Limit
+        description: Maximum requests allowed in the current window
+      - name: X-RateLimit-Remaining
+        description: Remaining requests in the current window
+      - name: X-RateLimit-Reset
+        description: Unix timestamp when the current window resets
+
+  - name: Exempt Tier
+    description: >
+      Reserved exclusively for internal Openverse infrastructure. Bypasses all
+      throttling entirely. Used for server-side rendering, load testing, and
+      internal tooling. Not available to external developers.
+    throttle: None (exempt from all throttling)
+    authentication: Internal only
+    notes: Not available to external API consumers

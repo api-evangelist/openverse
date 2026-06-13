@@ -1,0 +1,58 @@
+name: Openverse API FinOps
+description: >
+  The Openverse API is currently free for all users with no pricing tiers or
+  usage-based charges. The service is maintained by Automattic/WordPress as an
+  open-source public good under Creative Commons principles. The Terms of Service
+  reserve the right to charge fees for heavy commercial usage in the future, but
+  no such pricing is currently in effect. There are no metered costs, overage
+  charges, or premium paid plans at this time.
+url: https://wordpress.github.io/openverse-api/terms_of_service.html
+pricing:
+  model: Free
+  description: >
+    Completely free API with no paid tiers. Throttling is used to protect
+    infrastructure rather than monetize usage. The organization reserves the
+    right to charge fees for commercial or infrastructure-straining use in the
+    future.
+  currency: USD
+  tiers:
+    - name: Anonymous Access
+      price: 0.00
+      unit: month
+      notes: No registration required; lowest rate limits apply
+
+    - name: Standard Authenticated
+      price: 0.00
+      unit: month
+      notes: Free OAuth2 registration; higher rate limits
+
+    - name: Enhanced Authenticated
+      price: 0.00
+      unit: month
+      notes: By approval only; highest publicly available rate limits
+
+costs:
+  apiCalls: 0.00
+  storage: 0.00
+  bandwidth: 0.00
+  overages: 0.00
+
+notes:
+  - The Openverse API is a nonprofit/public-good service run by Automattic/WordPress
+  - No credit card or payment method required for any tier
+  - Enhanced rate limits require approval but are free
+  - Terms of Service permit future commercial charges for heavy usage
+  - Developers should budget for potential future pricing if building
+    high-volume commercial applications
+  - The API aggregates metadata from external sources; hosting costs are
+    borne by the Openverse project
+
+fundingModel:
+  description: >
+    Openverse is an open-source project maintained by Automattic (the company
+    behind WordPress.com). Development is community-driven with contributions
+    from WordPress and Creative Commons communities. Infrastructure costs are
+    absorbed by the maintainer organization.
+  organization: Automattic / WordPress
+  openSource: true
+  repository: https://github.com/WordPress/openverse

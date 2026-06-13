@@ -1,0 +1,64 @@
+name: Openverse
+description: >
+  Openverse is a search engine providing programmatic access to the world's
+  largest openly-licensed media catalog, covering 800M+ images and audio tracks
+  from cultural institutions, museums, and creative commons sources including
+  Flickr, Wikimedia Commons, iNaturalist, Europeana, Freesound, Jamendo, and
+  more. Built by WordPress/Automattic under Creative Commons licensing principles.
+image: https://openverse.org/openverse-logo.svg
+tags:
+  - Images
+  - Audio
+  - Creative Commons
+  - Open Media
+  - Search
+  - Open Data
+  - Cultural Heritage
+  - Museums
+url: https://openverse.org
+apis:
+  - name: Openverse API
+    description: >
+      REST API providing search and retrieval of openly-licensed images and audio
+      from 800M+ works across cultural institutions, museums, and creative commons
+      sources. Supports full-text search, license filtering, source filtering, and
+      media metadata retrieval. OAuth2 authentication available for higher rate limits.
+    image: https://openverse.org/openverse-logo.svg
+    humanURL: https://api.openverse.org/v1/
+    baseURL: https://api.openverse.org/v1
+    tags:
+      - Images
+      - Audio
+      - Creative Commons
+      - Search
+      - Open Media
+    properties:
+      - type: Documentation
+        url: https://docs.openverse.org/
+      - type: OpenAPI
+        url: https://api.openverse.org/v1/schema/?format=json
+      - type: Authentication
+        url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+      - type: TermsOfService
+        url: https://api.openverse.org/v1/terms_of_use/
+      - type: GitHubRepository
+        url: https://github.com/WordPress/openverse
+      - type: NPMPackage
+        url: https://www.npmjs.com/package/@openverse/api-client
+      - type: Plans
+        url: plans/plans.yml
+      - type: RateLimits
+        url: rate-limits/rate-limits.yml
+      - type: FinOps
+        url: finops/finops.yml
+    contact:
+      - FN: Openverse Team
+        url: https://make.wordpress.org/openverse/
+    x-apis-io-score: 0
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+created: "2026-06-13"
+modified: "2026-06-13"
+url: https://raw.githubusercontent.com/api-evangelist/openverse/refs/heads/main/apis.yml
+specificationVersion: "0.19"

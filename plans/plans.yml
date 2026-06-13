@@ -1,0 +1,69 @@
+name: Openverse API Plans
+description: >
+  The Openverse API is free to use with no paid tiers. Access is available
+  anonymously for limited use, or via OAuth2 registration for standard higher
+  limits. Enhanced rate limits are selectively granted for high-volume use cases.
+  The service reserves the right to charge fees for commercial or heavy usage in
+  the future.
+plans:
+  - name: Anonymous
+    description: >
+      Unauthenticated access to the Openverse API. Limited to 1 request per
+      second. Page size capped at 20 results per request. No registration required.
+      Suitable for development, testing, and low-volume exploration.
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+    price: 0.00
+    currency: USD
+    unit: month
+    features:
+      - Anonymous access — no registration needed
+      - Search images and audio
+      - 1 request per second throttle
+      - Maximum 20 results per page
+      - Access to all public endpoints
+    limitations:
+      - No API key required but heavily throttled
+      - Page size limited to 20 results
+      - No SLA or support
+
+  - name: Standard (Authenticated)
+    description: >
+      Free tier available to any developer who registers an OAuth2 application.
+      Provides a higher and more practical rate limit than anonymous access.
+      Registration requires an application name, description, and email. Tokens
+      are obtained via OAuth2 client credentials flow and expire periodically.
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+    price: 0.00
+    currency: USD
+    unit: month
+    features:
+      - OAuth2 client credentials authentication
+      - Higher rate limits than anonymous access
+      - Page size up to 500 results per request
+      - Bearer token authentication
+      - Access to all public endpoints
+      - Rate limit headers in responses
+    limitations:
+      - Must register an application
+      - Tokens expire and must be refreshed
+      - No guaranteed SLA
+
+  - name: Enhanced (By Request)
+    description: >
+      Selectively granted tier for high-volume use cases offering significantly
+      higher burst and sustained request rates. Must be requested from the Openverse
+      team and is typically reserved for trusted integrations, platforms, or
+      institutional partners. Not available via self-service.
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+    price: 0.00
+    currency: USD
+    unit: month
+    features:
+      - Significantly higher burst limits
+      - Higher sustained request rates
+      - OAuth2 authentication required
+      - Suitable for large-scale integrations
+    limitations:
+      - Must be approved by Openverse team
+      - Not available via self-service registration
+      - Subject to ongoing review
