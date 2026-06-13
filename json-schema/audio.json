@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/Audio",
+  "title": "Audio",
+  "type": "object",
+  "description": "A single audio file. Used in search results.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Our unique identifier for an open-licensed work."
+    },
+    "title": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the media."
+    },
+    "indexed_on": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The timestamp of when the media was indexed by Openverse."
+    },
+    "foreign_landing_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "The landing page of the work."
+    },
+    "url": {
+      "type": "string",
+      "nullable": true,
+      "description": "The actual URL to the media file.",
+      "maxLength": 1000
+    },
+    "creator": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the media creator."
+    },
+    "creator_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "A direct link to the media creator.",
+      "maxLength": 2000
+    },
+    "license": {
+      "type": "string",
+      "description": "The name of license for the media.",
+      "maxLength": 50
+    },
+    "license_version": {
+      "type": "string",
+      "nullable": true,
+      "description": "The version of the media license.",
+      "maxLength": 25
+    },
+    "license_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "A direct link to the license deed or legal terms.",
+      "readOnly": true
+    },
+    "provider": {
+      "type": "string",
+      "nullable": true,
+      "description": "The content provider, e.g. Flickr, Jamendo...",
+      "maxLength": 80
+    },
+    "source": {
+      "type": "string",
+      "nullable": true,
+      "description": "The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.",
+      "maxLength": 80
+    },
+    "category": {
+      "type": "string",
+      "nullable": true,
+      "description": "The top-level classification of this media file.",
+      "maxLength": 80
+    },
+    "genres": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 80
+      },
+      "nullable": true,
+      "description": "An array of audio genres such as `rock`, `electronic` for `music` category, or `politics`, `sport`, `education` for `podcast` category"
+    },
+    "filesize": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "Number in bytes, e.g. 1024."
+    },
+    "filetype": {
+      "type": "string",
+      "nullable": true,
+      "description": "The type of the file, related to the file extension.",
+      "maxLength": 80
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Tag"
+      },
+      "nullable": true,
+      "description": "Tags with detailed metadata, such as accuracy."
+    },
+    "alt_files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AudioAltFile"
+      },
+      "readOnly": true,
+      "nullable": true,
+      "description": "JSON describing alternative files for this audio."
+    },
+    "attribution": {
+      "type": "string",
+      "nullable": true,
+      "description": "Legally valid attribution for the media item in plain-text English.",
+      "readOnly": true
+    },
+    "fields_matched": {
+      "type": "array",
+      "items": {},
+      "nullable": true,
+      "description": "List the fields that matched the query for this result."
+    },
+    "mature": {
+      "type": "boolean",
+      "description": "Whether the media item is marked as mature"
+    },
+    "audio_set": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/AudioSet"
+        }
+      ],
+      "readOnly": true,
+      "nullable": true,
+      "description": "Reference to set of which this track is a part."
+    },
+    "duration": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "The time length of the audio file in milliseconds."
+    },
+    "bit_rate": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "Number in bits per second, eg. 128000."
+    },
+    "sample_rate": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "Number in hertz, eg. 44100."
+    },
+    "thumbnail": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "nullable": true,
+      "description": "A direct link to the miniature artwork."
+    },
+    "detail_url": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "description": "A direct link to the detail view of this audio file."
+    },
+    "related_url": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "description": "A link to an endpoint that provides similar audio files."
+    },
+    "waveform": {
+      "type": "string",
+      "format": "uri",
+      "readOnly": true,
+      "description": "A direct link to the waveform peaks."
+    }
+  },
+  "required": [
+    "alt_files",
+    "attribution",
+    "audio_set",
+    "detail_url",
+    "fields_matched",
+    "id",
+    "indexed_on",
+    "license",
+    "license_url",
+    "mature",
+    "related_url",
+    "tags",
+    "thumbnail",
+    "waveform"
+  ]
+}

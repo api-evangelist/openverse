@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/OAuth2Application",
+  "title": "OAuth2Application",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "The unique, public identifier of your application."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "The secret key used to authenticate your application."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of your application or project."
+    },
+    "msg": {
+      "type": "string",
+      "description": "Some additional information about the application."
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret",
+    "msg",
+    "name"
+  ]
+}

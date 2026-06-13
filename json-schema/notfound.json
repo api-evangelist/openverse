@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/NotFound",
+  "title": "NotFound",
+  "type": "object",
+  "properties": {
+    "detail": {
+      "type": "string",
+      "description": "A description of what went wrong."
+    }
+  }
+}

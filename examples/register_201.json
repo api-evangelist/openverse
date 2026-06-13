@@ -1,0 +1,5 @@
+{
+  "name": "My amazing project",
+  "client_id": "<Openverse API client ID>",
+  "client_secret": "<Openverse API client secret>"
+}

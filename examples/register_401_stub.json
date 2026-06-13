@@ -1,0 +1,13 @@
+{
+  "_example_for": "POST /v1/auth_tokens/register/",
+  "_operation_id": "register",
+  "_status": "401",
+  "_schema": {
+    "type": "object",
+    "properties": {
+      "error": {
+        "type": "string"
+      }
+    }
+  }
+}

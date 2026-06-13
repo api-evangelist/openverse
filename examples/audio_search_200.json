@@ -1,0 +1,111 @@
+{
+  "result_count": 10000,
+  "page_count": 20,
+  "page_size": 20,
+  "page": 1,
+  "results": [
+    {
+      "id": "8624ba61-57f1-4f98-8a85-ece206c319cf",
+      "title": "Wish You Were Here",
+      "indexed_on": "2022-12-06T06:54:25Z",
+      "foreign_landing_url": "https://www.jamendo.com/track/1214935",
+      "url": "https://mp3d.jamendo.com/download/track/1214935/mp32",
+      "creator": "The.madpix.project",
+      "creator_url": "https://www.jamendo.com/artist/441585/the.madpix.project",
+      "license": "by-nc-sa",
+      "license_version": "3.0",
+      "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+      "provider": "jamendo",
+      "source": "jamendo",
+      "category": "music",
+      "genres": [
+        "dance",
+        "electronic",
+        "house"
+      ],
+      "filesize": 7139840,
+      "filetype": "mp3",
+      "tags": [
+        {
+          "accuracy": null,
+          "name": "vocal",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "female",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "speed_medium",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "guitar",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "strings",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "energetic",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "acoustic",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "vocal",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "voice",
+          "unstable__provider": "jamendo"
+        },
+        {
+          "accuracy": null,
+          "name": "funkyhouse",
+          "unstable__provider": "jamendo"
+        }
+      ],
+      "alt_files": null,
+      "attribution": "\"Wish You Were Here\" by The.madpix.project is licensed under CC BY-NC-SA 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/.",
+      "fields_matched": [
+        "title"
+      ],
+      "mature": false,
+      "audio_set": {
+        "title": "Wish You Were Here",
+        "foreign_landing_url": "https://www.jamendo.com/album/145774/wish-you-were-here",
+        "creator": "The.madpix.project",
+        "creator_url": "https://www.jamendo.com/artist/441585/the.madpix.project",
+        "url": "https://usercontent.jamendo.com?type=album&id=145774&width=200",
+        "filesize": null,
+        "filetype": null
+      },
+      "duration": 270000,
+      "bit_rate": 128000,
+      "sample_rate": 44100,
+      "thumbnail": "https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/thumb/",
+      "detail_url": "https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/",
+      "related_url": "https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/",
+      "waveform": "https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/",
+      "unstable__sensitivity": []
+    }
+  ],
+  "warnings": [
+    {
+      "code": "partially invalid request parameter",
+      "message": "Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests."
+    }
+  ]
+}

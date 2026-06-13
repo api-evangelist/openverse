@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/Tag",
+  "title": "Tag",
+  "type": "object",
+  "description": "This output serializer serializes a singular tag.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of a detailed tag."
+    },
+    "accuracy": {
+      "type": "number",
+      "format": "double",
+      "nullable": true,
+      "description": "The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field."
+    },
+    "unstable__provider": {
+      "type": "string",
+      "nullable": true,
+      "title": "provider",
+      "description": "The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes."
+    }
+  },
+  "required": [
+    "name",
+    "unstable__provider"
+  ]
+}

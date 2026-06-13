@@ -1,0 +1,8 @@
+{
+  "_example_for": "POST /v1/auth_tokens/token/",
+  "_operation_id": "token",
+  "_status": "400",
+  "_schema": {
+    "$ref": "#/components/schemas/APIException"
+  }
+}

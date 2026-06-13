@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/Oembed",
+  "title": "Oembed",
+  "type": "object",
+  "description": "The embedded content from a specified image URL.\n\nThis is essentially an ``ImageSerializer`` with some changes to match the oEmbed\nspec: https://oembed.com.",
+  "properties": {
+    "version": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/VersionEnum"
+        }
+      ],
+      "readOnly": true,
+      "description": "The oEmbed version number, always set to 1.0."
+    },
+    "type": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/TypeEnum"
+        }
+      ],
+      "readOnly": true,
+      "description": "The resource type, always set to 'photo' for images."
+    },
+    "width": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The width of the image in pixels."
+    },
+    "height": {
+      "type": "integer",
+      "readOnly": true,
+      "description": "The height of the image in pixels."
+    },
+    "title": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the media."
+    },
+    "author_name": {
+      "type": "string",
+      "description": "The name of the media creator."
+    },
+    "author_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "A direct link to the media creator."
+    },
+    "license_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "A direct link to the license deed or legal terms.",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "author_name",
+    "author_url",
+    "height",
+    "license_url",
+    "type",
+    "version",
+    "width"
+  ]
+}

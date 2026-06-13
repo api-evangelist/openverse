@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/AudioSet",
+  "title": "AudioSet",
+  "type": "object",
+  "description": "An audio set, rendered as a part of the ``AudioSerializer`` output.",
+  "properties": {
+    "title": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the media."
+    },
+    "foreign_landing_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "The landing page of the work."
+    },
+    "creator": {
+      "type": "string",
+      "nullable": true,
+      "description": "The name of the media creator."
+    },
+    "creator_url": {
+      "type": "string",
+      "nullable": true,
+      "description": "A direct link to the media creator.",
+      "maxLength": 2000
+    },
+    "url": {
+      "type": "string",
+      "nullable": true,
+      "description": "The actual URL to the media file.",
+      "maxLength": 1000
+    },
+    "filesize": {
+      "type": "integer",
+      "maximum": 2147483647,
+      "minimum": -2147483648,
+      "nullable": true,
+      "description": "Number in bytes, e.g. 1024."
+    },
+    "filetype": {
+      "type": "string",
+      "nullable": true,
+      "description": "The type of the file, related to the file extension.",
+      "maxLength": 80
+    }
+  }
+}

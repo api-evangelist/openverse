@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/OAuth2Registration",
+  "title": "OAuth2Registration",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A unique human-readable name for your application or project requiring access to the Openverse API.",
+      "maxLength": 150
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of what you are trying to achieve with your project using the API. Please provide as much detail as possible!",
+      "maxLength": 10000
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "A valid email that we can reach you at if we have any questions about your use case or data consumption.",
+      "maxLength": 254
+    }
+  },
+  "required": [
+    "description",
+    "email",
+    "name"
+  ]
+}

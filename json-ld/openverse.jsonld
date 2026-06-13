@@ -1,0 +1,50 @@
+{
+  "@context": "https://raw.githubusercontent.com/api-evangelist/openverse/main/json-ld/context.jsonld",
+  "@type": "schema:WebAPI",
+  "@id": "https://api.openverse.org/v1",
+  "schema:name": "Openverse API",
+  "schema:description": "Openverse is a search engine providing programmatic access to the world's largest openly-licensed media catalog, covering 800M+ images and audio tracks from cultural institutions, museums, and creative commons sources.",
+  "schema:url": "https://api.openverse.org/v1/",
+  "schema:documentation": "https://docs.openverse.org/",
+  "schema:termsOfService": "https://api.openverse.org/v1/terms_of_use/",
+  "schema:license": "https://opensource.org/licenses/MIT",
+  "schema:provider": {
+    "@type": "schema:Organization",
+    "schema:name": "WordPress / Automattic",
+    "schema:url": "https://automattic.com",
+    "schema:contactPoint": {
+      "@type": "schema:ContactPoint",
+      "schema:email": "openverse@wordpress.org",
+      "schema:url": "https://make.wordpress.org/openverse/"
+    }
+  },
+  "schema:offers": {
+    "@type": "schema:Offer",
+    "schema:description": "Free access with optional OAuth2 registration for higher rate limits"
+  },
+  "schema:availableChannel": [
+    {
+      "@type": "schema:ServiceChannel",
+      "schema:name": "Image Search",
+      "schema:serviceUrl": "https://api.openverse.org/v1/images/"
+    },
+    {
+      "@type": "schema:ServiceChannel",
+      "schema:name": "Audio Search",
+      "schema:serviceUrl": "https://api.openverse.org/v1/audio/"
+    }
+  ],
+  "schema:encodingFormat": "application/json",
+  "schema:inLanguage": "en",
+  "schema:keywords": [
+    "images",
+    "audio",
+    "creative commons",
+    "open media",
+    "search",
+    "open data",
+    "cultural heritage",
+    "museums",
+    "openly-licensed"
+  ]
+}

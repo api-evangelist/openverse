@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/GrantTypeEnum",
+  "title": "GrantTypeEnum",
+  "enum": [
+    "client_credentials"
+  ],
+  "type": "string",
+  "description": "* `client_credentials` - client_credentials"
+}

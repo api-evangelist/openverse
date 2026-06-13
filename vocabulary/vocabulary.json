@@ -1,0 +1,558 @@
+{
+  "vocabulary": [
+    {
+      "term": "detail",
+      "description": "A description of what went wrong.",
+      "type": "string",
+      "source": "schema:APIException"
+    },
+    {
+      "term": "id",
+      "description": "Our unique identifier for an open-licensed work.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "title",
+      "description": "The name of the media.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "indexed_on",
+      "description": "The timestamp of when the media was indexed by Openverse.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "foreign_landing_url",
+      "description": "The landing page of the work.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "url",
+      "description": "The actual URL to the media file.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "creator",
+      "description": "The name of the media creator.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "creator_url",
+      "description": "A direct link to the media creator.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "license",
+      "description": "The name of license for the media.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "license_version",
+      "description": "The version of the media license.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "license_url",
+      "description": "A direct link to the license deed or legal terms.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "provider",
+      "description": "The content provider, e.g. Flickr, Jamendo...",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "source",
+      "description": "The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "category",
+      "description": "The top-level classification of this media file.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "genres",
+      "description": "An array of audio genres such as `rock`, `electronic` for `music` category, or `politics`, `sport`, `education` for `podcast` category",
+      "type": "array",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "filesize",
+      "description": "Number in bytes, e.g. 1024.",
+      "type": "integer",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "filetype",
+      "description": "The type of the file, related to the file extension.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "tags",
+      "description": "Tags with detailed metadata, such as accuracy.",
+      "type": "array",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "alt_files",
+      "description": "JSON describing alternative files for this audio.",
+      "type": "array",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "attribution",
+      "description": "Legally valid attribution for the media item in plain-text English.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "fields_matched",
+      "description": "List the fields that matched the query for this result.",
+      "type": "array",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "mature",
+      "description": "Whether the media item is marked as mature",
+      "type": "boolean",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "audio_set",
+      "description": "Reference to set of which this track is a part.",
+      "type": "",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "duration",
+      "description": "The time length of the audio file in milliseconds.",
+      "type": "integer",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "bit_rate",
+      "description": "Number in bits per second, eg. 128000.",
+      "type": "integer",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "sample_rate",
+      "description": "Number in hertz, eg. 44100.",
+      "type": "integer",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "thumbnail",
+      "description": "A direct link to the miniature artwork.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "detail_url",
+      "description": "A direct link to the detail view of this audio file.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "related_url",
+      "description": "A link to an endpoint that provides similar audio files.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "waveform",
+      "description": "A direct link to the waveform peaks.",
+      "type": "string",
+      "source": "schema:Audio"
+    },
+    {
+      "term": "identifier",
+      "description": "Our unique identifier for an open-licensed work.",
+      "type": "string",
+      "source": "schema:AudioReportRequest"
+    },
+    {
+      "term": "reason",
+      "description": "The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+      "type": "",
+      "source": "schema:AudioReportRequest"
+    },
+    {
+      "term": "description",
+      "description": "The explanation on why media is being reported.",
+      "type": "string",
+      "source": "schema:AudioReportRequest"
+    },
+    {
+      "term": "len",
+      "description": "",
+      "type": "integer",
+      "source": "schema:AudioWaveform"
+    },
+    {
+      "term": "points",
+      "description": "",
+      "type": "array",
+      "source": "schema:AudioWaveform"
+    },
+    {
+      "term": "GrantTypeEnum",
+      "description": "* `client_credentials` - client_credentials",
+      "type": "enum",
+      "values": [
+        "client_credentials"
+      ],
+      "source": "schema:GrantTypeEnum"
+    },
+    {
+      "term": "height",
+      "description": "The height of the image in pixels. Not always available.",
+      "type": "integer",
+      "source": "schema:Image"
+    },
+    {
+      "term": "width",
+      "description": "The width of the image in pixels. Not always available.",
+      "type": "integer",
+      "source": "schema:Image"
+    },
+    {
+      "term": "client_id",
+      "description": "The unique, public identifier of your application.",
+      "type": "string",
+      "source": "schema:OAuth2Application"
+    },
+    {
+      "term": "client_secret",
+      "description": "The secret key used to authenticate your application.",
+      "type": "string",
+      "source": "schema:OAuth2Application"
+    },
+    {
+      "term": "name",
+      "description": "The name of your application or project.",
+      "type": "string",
+      "source": "schema:OAuth2Application"
+    },
+    {
+      "term": "msg",
+      "description": "Some additional information about the application.",
+      "type": "string",
+      "source": "schema:OAuth2Application"
+    },
+    {
+      "term": "requests_this_minute",
+      "description": "The number of requests your key has performed in the last minute.",
+      "type": "integer",
+      "source": "schema:OAuth2KeyInfo"
+    },
+    {
+      "term": "requests_today",
+      "description": "The number of requests your key has performed in the last day.",
+      "type": "integer",
+      "source": "schema:OAuth2KeyInfo"
+    },
+    {
+      "term": "rate_limit_model",
+      "description": "The type of rate limit applied to your key. Can be 'standard' or 'enhanced'; enhanced users enjoy higher rate limits than their standard key counterparts. Contact Openverse if you need a higher rate limit.",
+      "type": "string",
+      "source": "schema:OAuth2KeyInfo"
+    },
+    {
+      "term": "verified",
+      "description": "Whether the application has verified the submitted email address.",
+      "type": "boolean",
+      "source": "schema:OAuth2KeyInfo"
+    },
+    {
+      "term": "email",
+      "description": "A valid email that we can reach you at if we have any questions about your use case or data consumption.",
+      "type": "string",
+      "source": "schema:OAuth2Registration"
+    },
+    {
+      "term": "access_token",
+      "description": "The access token that can be used to authenticate requests.",
+      "type": "string",
+      "source": "schema:OAuth2Token"
+    },
+    {
+      "term": "token_type",
+      "description": "The type of token. This will always be 'Bearer'.",
+      "type": "string",
+      "source": "schema:OAuth2Token"
+    },
+    {
+      "term": "expires_in",
+      "description": "The number of seconds until the token expires.",
+      "type": "integer",
+      "source": "schema:OAuth2Token"
+    },
+    {
+      "term": "scope",
+      "description": "The scope of the token.",
+      "type": "string",
+      "source": "schema:OAuth2Token"
+    },
+    {
+      "term": "grant_type",
+      "description": "",
+      "type": "#/components/schemas/GrantTypeEnum",
+      "source": "schema:OAuth2TokenRequest"
+    },
+    {
+      "term": "version",
+      "description": "The oEmbed version number, always set to 1.0.",
+      "type": "",
+      "source": "schema:Oembed"
+    },
+    {
+      "term": "type",
+      "description": "The resource type, always set to 'photo' for images.",
+      "type": "",
+      "source": "schema:Oembed"
+    },
+    {
+      "term": "author_name",
+      "description": "The name of the media creator.",
+      "type": "string",
+      "source": "schema:Oembed"
+    },
+    {
+      "term": "author_url",
+      "description": "A direct link to the media creator.",
+      "type": "string",
+      "source": "schema:Oembed"
+    },
+    {
+      "term": "result_count",
+      "description": "The total number of items returned by search result.",
+      "type": "integer",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "page_count",
+      "description": "The total number of pages returned by search result.",
+      "type": "integer",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "page_size",
+      "description": "The number of items per page.",
+      "type": "integer",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "page",
+      "description": "The current page number returned in the response.",
+      "type": "integer",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "results",
+      "description": "",
+      "type": "array",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "warnings",
+      "description": "Warnings pertinent to the request. If there are no warnings, this property will not be present on the response. Warnings are non-critical problems with the request. Responses with warnings should be treated as unstable. Warning descriptions must not be treated as machine readable and their schema can change at any time.",
+      "type": "array",
+      "source": "schema:PaginatedAudioList"
+    },
+    {
+      "term": "ReasonEnum",
+      "description": "* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+      "type": "enum",
+      "values": [
+        "mature",
+        "dmca",
+        "other"
+      ],
+      "source": "schema:ReasonEnum"
+    },
+    {
+      "term": "source_name",
+      "description": "The source of the media, e.g. flickr",
+      "type": "string",
+      "source": "schema:Source"
+    },
+    {
+      "term": "display_name",
+      "description": "The name of content source, e.g. Flickr",
+      "type": "string",
+      "source": "schema:Source"
+    },
+    {
+      "term": "source_url",
+      "description": "The URL of the source, e.g. https://www.flickr.com",
+      "type": "string",
+      "source": "schema:Source"
+    },
+    {
+      "term": "logo_url",
+      "description": "The URL to a logo for the source.",
+      "type": "string",
+      "source": "schema:Source"
+    },
+    {
+      "term": "media_count",
+      "description": "The number of media items indexed from the source.",
+      "type": "integer",
+      "source": "schema:Source"
+    },
+    {
+      "term": "accuracy",
+      "description": "The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.",
+      "type": "number",
+      "source": "schema:Tag"
+    },
+    {
+      "term": "unstable__provider",
+      "description": "The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.",
+      "type": "string",
+      "source": "schema:Tag"
+    },
+    {
+      "term": "TypeEnum",
+      "description": "",
+      "type": "enum",
+      "values": [
+        "photo"
+      ],
+      "source": "schema:TypeEnum"
+    },
+    {
+      "term": "VersionEnum",
+      "description": "",
+      "type": "enum",
+      "values": [
+        "1.0"
+      ],
+      "source": "schema:VersionEnum"
+    },
+    {
+      "term": "q",
+      "description": "A query string that should not exceed 200 characters in length",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "excluded_source",
+      "description": "\nA comma separated list of data sources to exclude from the search.\nValid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.\n",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__collection",
+      "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\nThe kind of media collection to return.\n\nMust be used with `unstable__tag`, `source` or `creator`+`source`\n\n* `tag` - tag\n* `source` - source\n* `creator` - creator",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__tag",
+      "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\n_Must be used with `unstable__collection=tag`_\n\nGet the collection of media with a specific tag. Returns the collection of media\nthat has the specified tag, matching exactly and entirely.\n\nDifferences that will cause tags to not match are:\n- upper and lower case letters\n- diacritical marks\n- hyphenation\n- spacing\n- multi-word tags where the query is only one of the words in the tag\n- multi-word tags where the words are in a different order.\n\nExamples of tags that **do not** match:\n- \"Low-Quality\" and \"low-quality\"\n- \"jalape\u00f1o\" and \"jalapeno\"\n- \"Saint Pierre des Champs\" and \"Saint-Pierre-des-Champs\"\n- \"dog walking\" and \"dog  walking\" (where the latter has two spaces between the\nlast two words, as in a typographical error)\n- \"runner\" and \"marathon runner\"\n- \"exclaiming loudly\" and \"loudly exclaiming\"\n\nFor non-exact or multi-tag matching, using the `tags` query parameter.\n",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "license_type",
+      "description": "A comma separated list of license types; available license types include: `all`, `all-cc`, `commercial`, and `modification`.",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "filter_dead",
+      "description": "Control whether 404 links are filtered out.",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "extension",
+      "description": "A comma separated list of desired file extensions.",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__sort_by",
+      "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe field which should be the basis for sorting results.\n\n* `relevance` - Relevance\n* `indexed_on` - Indexing date",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__sort_dir",
+      "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe direction of sorting. Cannot be applied when sorting by `relevance`.\n\n* `desc` - Descending\n* `asc` - Ascending",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__authority",
+      "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nIf enabled, the search will add a boost to results that are from authoritative sources.",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__authority_boost",
+      "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe boost coefficient to apply to authoritative sources, multiplied with the popularity boost.",
+      "type": "number",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "unstable__include_sensitive_results",
+      "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nWhether to include results considered sensitive.",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "length",
+      "description": "A comma separated list of lengths; available lengths include: `long`, `medium`, `short`, and `shortest`.",
+      "type": "string",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "peaks",
+      "description": "Whether to include the waveform peaks or not",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/"
+    },
+    {
+      "term": "full_size",
+      "description": "whether to render the actual image and not a thumbnail version",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/{identifier}/thumb/"
+    },
+    {
+      "term": "compressed",
+      "description": "whether to compress the output image to reduce file size,defaults to opposite of `full_size`",
+      "type": "boolean",
+      "source": "parameter:/v1/audio/{identifier}/thumb/"
+    },
+    {
+      "term": "aspect_ratio",
+      "description": "A comma separated list of aspect ratios; available aspect ratios include: `square`, `tall`, and `wide`.",
+      "type": "string",
+      "source": "parameter:/v1/images/"
+    },
+    {
+      "term": "size",
+      "description": "A comma separated list of image sizes; available image sizes include: `large`, `medium`, and `small`.",
+      "type": "string",
+      "source": "parameter:/v1/images/"
+    }
+  ]
+}

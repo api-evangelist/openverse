@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/OAuth2KeyInfo",
+  "title": "OAuth2KeyInfo",
+  "type": "object",
+  "properties": {
+    "requests_this_minute": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The number of requests your key has performed in the last minute."
+    },
+    "requests_today": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The number of requests your key has performed in the last day."
+    },
+    "rate_limit_model": {
+      "type": "string",
+      "description": "The type of rate limit applied to your key. Can be 'standard' or 'enhanced'; enhanced users enjoy higher rate limits than their standard key counterparts. Contact Openverse if you need a higher rate limit."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Whether the application has verified the submitted email address."
+    }
+  },
+  "required": [
+    "rate_limit_model",
+    "requests_this_minute",
+    "requests_today",
+    "verified"
+  ]
+}

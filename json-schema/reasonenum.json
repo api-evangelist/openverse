@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/ReasonEnum",
+  "title": "ReasonEnum",
+  "enum": [
+    "mature",
+    "dmca",
+    "other"
+  ],
+  "type": "string",
+  "description": "* `mature` - mature\n* `dmca` - dmca\n* `other` - other"
+}

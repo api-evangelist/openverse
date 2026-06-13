@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/OAuth2TokenRequest",
+  "title": "OAuth2TokenRequest",
+  "type": "object",
+  "description": "Serializes a request for an access token.\n\nThis is a dummy serializer for OpenAPI and is not actually used.",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "The unique, public identifier of your application."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "The secret key used to authenticate your application."
+    },
+    "grant_type": {
+      "$ref": "#/components/schemas/GrantTypeEnum"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret",
+    "grant_type"
+  ]
+}

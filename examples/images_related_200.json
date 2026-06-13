@@ -1,0 +1,38 @@
+{
+  "result_count": 10000,
+  "page_count": 20,
+  "page_size": 20,
+  "page": 1,
+  "results": [
+    {
+      "title": "exam tactics",
+      "id": "610756ec-ae31-4d5e-8f03-8cc52f31b71d",
+      "creator": "Sean MacEntee",
+      "creator_url": "https://www.flickr.com/photos/18090920@N07",
+      "tags": [
+        {
+          "name": "exam"
+        },
+        {
+          "name": "tactics"
+        }
+      ],
+      "url": "https://live.staticflickr.com/4065/4459771899_07595dc42e.jpg",
+      "thumbnail": "https://api.openverse.org/v1/thumbs/610756ec-ae31-4d5e-8f03-8cc52f31b71d",
+      "provider": "flickr",
+      "source": "flickr",
+      "license": "by",
+      "license_version": "2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "foreign_landing_url": "https://www.flickr.com/photos/18090920@N07/4459771899",
+      "detail_url": "https://api.openverse.org/v1/images/610756ec-ae31-4d5e-8f03-8cc52f31b71d",
+      "related_url": "https://api.openverse.org/v1/recommendations/images/610756ec-ae31-4d5e-8f03-8cc52f31b71d"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "partially invalid request parameter",
+      "message": "Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests."
+    }
+  ]
+}

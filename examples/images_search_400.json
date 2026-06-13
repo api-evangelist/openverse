@@ -1,0 +1,7 @@
+{
+  "error": "InputError",
+  "detail": "Invalid input given for fields. 'license' -> License 'PDMNBCG' does not exist.",
+  "fields": [
+    "license"
+  ]
+}

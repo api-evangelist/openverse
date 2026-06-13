@@ -1,0 +1,8 @@
+{
+  "_example_for": "GET /v1/images/{identifier}/thumb/",
+  "_operation_id": "images_thumb",
+  "_status": "404",
+  "_schema": {
+    "$ref": "#/components/schemas/NotFound"
+  }
+}

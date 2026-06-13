@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/AudioWaveform",
+  "title": "AudioWaveform",
+  "type": "object",
+  "properties": {
+    "len": {
+      "type": "integer",
+      "readOnly": true
+    },
+    "points": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "format": "double",
+        "maximum": 1,
+        "minimum": 0
+      }
+    }
+  },
+  "required": [
+    "len",
+    "points"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "access_token": "<Openverse API token>",
+  "scope": "read write groups",
+  "expires_in": 36000,
+  "token_type": "Bearer"
+}

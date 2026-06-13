@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/OAuth2Token",
+  "title": "OAuth2Token",
+  "type": "object",
+  "description": "Serializes the response for an access token.\n\nThis is a dummy serializer for OpenAPI and is not actually used.",
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "The access token that can be used to authenticate requests."
+    },
+    "token_type": {
+      "type": "string",
+      "description": "The type of token. This will always be 'Bearer'."
+    },
+    "expires_in": {
+      "type": "integer",
+      "description": "The number of seconds until the token expires."
+    },
+    "scope": {
+      "type": "string",
+      "description": "The scope of the token."
+    }
+  },
+  "required": [
+    "access_token",
+    "expires_in",
+    "scope",
+    "token_type"
+  ]
+}

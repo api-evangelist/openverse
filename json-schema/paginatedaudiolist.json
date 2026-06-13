@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/PaginatedAudioList",
+  "title": "PaginatedAudioList",
+  "type": "object",
+  "properties": {
+    "result_count": {
+      "type": "integer",
+      "description": "The total number of items returned by search result.",
+      "example": 10000
+    },
+    "page_count": {
+      "type": "integer",
+      "description": "The total number of pages returned by search result.",
+      "example": 20
+    },
+    "page_size": {
+      "type": "integer",
+      "description": "The number of items per page.",
+      "example": 20
+    },
+    "page": {
+      "type": "integer",
+      "description": "The current page number returned in the response.",
+      "example": 1
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Audio"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Warnings pertinent to the request. If there are no warnings, this property will not be present on the response. Warnings are non-critical problems with the request. Responses with warnings should be treated as unstable. Warning descriptions must not be treated as machine readable and their schema can change at any time.",
+      "example": [
+        {
+          "code": "partially invalid request parameter",
+          "message": "Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests."
+        }
+      ]
+    }
+  },
+  "required": [
+    "page_count",
+    "page_size",
+    "page",
+    "results",
+    "result_count"
+  ]
+}

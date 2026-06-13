@@ -1,0 +1,164 @@
+{
+  "result_count": 10000,
+  "page_count": 20,
+  "page_size": 20,
+  "page": 1,
+  "results": [
+    {
+      "id": "4bc43a04-ef46-4544-a0c1-63c63f56e276",
+      "title": "Tree Bark Photo",
+      "indexed_on": "2022-08-27T17:39:48Z",
+      "foreign_landing_url": "https://stocksnap.io/photo/XNVBVXO3B7",
+      "url": "https://cdn.stocksnap.io/img-thumbs/960w/XNVBVXO3B7.jpg",
+      "creator": "Tim Sullivan",
+      "creator_url": "https://www.secretagencygroup.com",
+      "license": "cc0",
+      "license_version": "1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "provider": "stocksnap",
+      "source": "stocksnap",
+      "category": "photograph",
+      "filesize": 896128,
+      "filetype": "jpg",
+      "tags": [
+        {
+          "accuracy": null,
+          "name": "tree",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "bark",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "texture",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "wood",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "nature",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "pattern",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "rough",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "surface",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "brown",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "old",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "background",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "trunk",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "natural",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "forest",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "detail",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "lumber",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "weathered",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "timber",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "stump",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "closeup",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": null,
+          "name": "root",
+          "unstable__provider": "stocksnap"
+        },
+        {
+          "accuracy": 0.95,
+          "name": "tree",
+          "unstable__provider": "machine_example"
+        },
+        {
+          "accuracy": 0.9,
+          "name": "bark",
+          "unstable__provider": "machine_example"
+        },
+        {
+          "accuracy": 0.98,
+          "name": "plant",
+          "unstable__provider": "machine_example"
+        }
+      ],
+      "attribution": "\"Tree Bark Photo\" by Tim Sullivan is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "fields_matched": [
+        "title"
+      ],
+      "mature": false,
+      "height": 4016,
+      "width": 6016,
+      "thumbnail": "https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/thumb/",
+      "detail_url": "https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/",
+      "related_url": "https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/related/",
+      "unstable__sensitivity": []
+    }
+  ],
+  "warnings": [
+    {
+      "code": "partially invalid request parameter",
+      "message": "Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.openverse.org/v1/schema/AudioAltFile",
+  "title": "AudioAltFile",
+  "type": "object",
+  "description": "A set of alternative files for a single audio object,\nrendered as a part of the ``AudioSerializer`` output.",
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the alternative file."
+    },
+    "bit_rate": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Bit rate of the alternative file."
+    },
+    "filesize": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Size of the alternative file in bytes."
+    },
+    "filetype": {
+      "type": "string",
+      "description": "File type of the alternative file."
+    },
+    "sample_rate": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Sample rate of the alternative file."
+    }
+  },
+  "required": [
+    "filetype",
+    "url"
+  ]
+}
