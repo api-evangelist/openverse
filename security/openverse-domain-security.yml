@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: api.openverse.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  4 13:21:29 2026 GMT
+  hsts: false
+domains:
+- domain: openverse.org
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false

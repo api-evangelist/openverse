@@ -62,3 +62,10 @@ created: "2026-06-13"
 modified: "2026-06-13"
 url: https://raw.githubusercontent.com/api-evangelist/openverse/refs/heads/main/apis.yml
 specificationVersion: "0.19"
+common:
+  - type: DomainSecurity
+    url: security/openverse-domain-security.yml
+  - type: Authentication
+    url: authentication/openverse-authentication.yml
+  - url: https://make.wordpress.org/openverse/feed/
+    type: Blog
