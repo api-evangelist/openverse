@@ -1,0 +1,486 @@
+openapi: 3.0.3
+info:
+  title: Openverse audio auth API
+  version: 909aa41ddf2115a69a447198b3f49121481e0c6b (v1)
+  x-logo:
+    url: https://raw.githubusercontent.com/WordPress/openverse/HEAD/documentation/meta/brand/logo.svg
+    backgroundColor: '#fafafa'
+  description: '
+
+    Openverse is a search engine for openly-licensed media. The Openverse
+
+    API is a system that allows programmatic access to public domain digital
+
+    media. It is our ambition to index and catalog billions of
+
+    openly-licensed works, including articles, songs, videos, photographs,
+
+    paintings, and more.
+
+
+    Using this API, developers will be able to access the digital commons in
+
+    their own applications. You can see some examples of
+
+    [apps built with Openverse](https://docs.openverse.org/api/reference/made_with_ov.html)
+
+    in our docs.
+
+    '
+  termsOfService: https://docs.openverse.org/terms_of_service.html
+  contact:
+    name: Openverse
+    email: openverse@wordpress.org
+  license:
+    name: MIT License
+    url: https://github.com/WordPress/openverse/blob/main/LICENSE
+tags:
+- name: auth
+  description: '
+
+    Openverse provides free and open access to the Openverse API to
+
+    anonymous and registered users. [Refer to the API documentation
+
+    site for information on how to register](https://api.openverse.org/v1/#tag/auth).
+
+
+    All Openverse API users are subject to rate limits and restrictions
+
+    on how much of Openverse''s dataset can be accessed through the API.
+
+    [Individuals should contact Openverse to request expanded access to
+
+    the API](https://github.com/WordPress/openverse#keep-in-touch).
+
+    Requests are considered on a case-by-case basis and are subject to
+
+    evaluation in light of [Openverse''s Terms of Service](https://docs.openverse.org/terms_of_service.html).
+
+    Escalated access may be revoked at any time.
+
+
+    To authenticate yourself, you must sign up for an API key using
+
+    the `register` endpoint and then get an access token using the
+
+    `token` endpoint. Read on to know about these endpoints.
+
+
+    In subsequent requests, include your access token as a bearer
+
+    token in the `Authorization` header.
+
+
+    ```
+
+    Authorization: Bearer <access_token>
+
+    ```
+
+
+    ### Rate limits
+
+
+    Openverse endpoints are rate limited. Anonymous requests should be
+
+    sufficient for most users. Indeed, https://openverse.org itself
+
+    operates using anonymous requests from the browser.
+
+
+    Registered users are automatically granted slightly higher limits.
+
+    Further increases to rate limits are available upon request (see above).
+
+
+    Every Openverse API response that was subject to rate-limits includes
+
+    headers outlining the permitted and available usage. Exceeding the limit
+
+    will result in ''429: Too Many Requests'' responses.
+
+
+    ### Pagination
+
+
+    Openverse''s dataset is valuable, and the
+
+    [Terms of Service](https://docs.openverse.org/terms_of_service.html)
+
+    disallow scraping under all circumstances. As such, pagination
+
+    for anonymous users is limited, accommodating only the typical
+
+    usage on https://openverse.org. Pagination is limited in terms
+
+    of the size of individual pages and the total number of works
+
+    visible for a query (pagination depth).
+
+
+    Authenticated users are subject to the same limit of total works
+
+    available for a query, but may request larger individual pages.
+
+
+    Increases to pagination limits on page size and total depth are
+
+    available upon request (see above).
+
+    '
+paths:
+  /v1/auth_tokens/register/:
+    post:
+      operationId: register
+      description: 'Register an application to access to API via OAuth2.
+
+
+        Upon registering, you will receive a `client_id` and `client_secret`,
+
+        which you can then use to authenticate using the standard OAuth2 flow.
+
+
+        > ⚠️ **WARNINGS:**
+
+        > - Store your `client_id` and `client_secret` because you will not be
+
+        >   able to retrieve them later.
+
+        > - You must keep `client_secret` confidential, as anybody with your
+
+        >   `client_secret` can impersonate your application.
+
+
+        You must verify your email address by click the link sent to you in an
+
+        email. Until you do that, the application will be subject to the same
+
+        rate limits as an anonymous user.'
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OAuth2Registration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuth2Registration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OAuth2Registration'
+        required: true
+      security:
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Application'
+              examples:
+                Created:
+                  value:
+                    name: My amazing project
+                    client_id: <Openverse API client ID>
+                    client_secret: <Openverse API client secret>
+          description: Created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+              examples:
+                BadRequest:
+                  value:
+                    detail:
+                      <request parameter>: <error details>
+                  summary: Bad Request
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+          description: Unauthorized
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIException'
+          description: Too Many Requests
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Register for a key\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"name\": \"My amazing project\", \"description\": \"To access Openverse API\", \"email\": \"user@example.com\"}' \\\n  \"https://api.openverse.org/v1/auth_tokens/register/\"\n"
+  /v1/auth_tokens/token/:
+    post:
+      operationId: token
+      description: 'Get an access token using client credentials.
+
+
+        To authenticate your requests to the Openverse API, you need to provide
+
+        an access token as a bearer token in the `Authorization` header of your
+
+        requests. This endpoint takes your client ID and secret, and issues an
+
+        access token.
+
+
+        > **NOTE:** This endpoint only accepts data as
+
+        > `application/x-www-form-urlencoded`. Any other encoding will not work.
+
+
+        Once your access token expires, you can request another one from this
+
+        endpoint.'
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OAuth2TokenRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2Token'
+              examples:
+                OK:
+                  value:
+                    access_token: <Openverse API token>
+                    scope: read write groups
+                    expires_in: 36000
+                    token_type: Bearer
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthenticated'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Authentication credentials were not provided.
+          description: Unauthorized
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIException'
+          description: Bad Request
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Get an access token token\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d 'grant_type=client_credentials&client_id=<Openverse API client ID>&client_secret=<Openverse API client secret>' \\\n  \"https://api.openverse.org/v1/auth_tokens/token/\"\n"
+  /v1/rate_limit/:
+    get:
+      operationId: key_info
+      description: 'Get information about your API key.
+
+
+        You can use this endpoint to get information about your API key such as
+
+        `requests_this_minute`, `requests_today`, and `rate_limit_model`.
+
+
+        > ℹ️ **NOTE:** If you get a 401 Unauthorized, it means your token is invalid
+
+        > (malformed, non-existent, or expired).'
+      tags:
+      - auth
+      security:
+      - Openverse API Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuth2KeyInfo'
+              examples:
+                OK:
+                  value:
+                    requests_this_minute: 2
+                    requests_today: 40
+                    rate_limit_model: enhanced
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthenticated'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Authentication credentials were not provided.
+          description: Unauthorized
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIException'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIException'
+              examples:
+                InternalServerError:
+                  value:
+                    detail: A server error occurred.
+                  summary: Internal Server Error
+          description: Internal Server Error
+      x-codeSamples:
+      - lang: cURL
+        source: "\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/rate_limit/\"\n"
+components:
+  schemas:
+    OAuth2KeyInfo:
+      type: object
+      properties:
+        requests_this_minute:
+          type: integer
+          nullable: true
+          description: The number of requests your key has performed in the last minute.
+        requests_today:
+          type: integer
+          nullable: true
+          description: The number of requests your key has performed in the last day.
+        rate_limit_model:
+          type: string
+          description: The type of rate limit applied to your key. Can be 'standard' or 'enhanced'; enhanced users enjoy higher rate limits than their standard key counterparts. Contact Openverse if you need a higher rate limit.
+        verified:
+          type: boolean
+          description: Whether the application has verified the submitted email address.
+      required:
+      - rate_limit_model
+      - requests_this_minute
+      - requests_today
+      - verified
+    OAuth2TokenRequest:
+      type: object
+      description: 'Serializes a request for an access token.
+
+
+        This is a dummy serializer for OpenAPI and is not actually used.'
+      properties:
+        client_id:
+          type: string
+          description: The unique, public identifier of your application.
+        client_secret:
+          type: string
+          description: The secret key used to authenticate your application.
+        grant_type:
+          $ref: '#/components/schemas/GrantTypeEnum'
+      required:
+      - client_id
+      - client_secret
+      - grant_type
+    GrantTypeEnum:
+      enum:
+      - client_credentials
+      type: string
+      description: '* `client_credentials` - client_credentials'
+    OAuth2Registration:
+      type: object
+      properties:
+        name:
+          type: string
+          description: A unique human-readable name for your application or project requiring access to the Openverse API.
+          maxLength: 150
+        description:
+          type: string
+          description: A description of what you are trying to achieve with your project using the API. Please provide as much detail as possible!
+          maxLength: 10000
+        email:
+          type: string
+          format: email
+          description: A valid email that we can reach you at if we have any questions about your use case or data consumption.
+          maxLength: 254
+      required:
+      - description
+      - email
+      - name
+    OAuth2Token:
+      type: object
+      description: 'Serializes the response for an access token.
+
+
+        This is a dummy serializer for OpenAPI and is not actually used.'
+      properties:
+        access_token:
+          type: string
+          description: The access token that can be used to authenticate requests.
+        token_type:
+          type: string
+          description: The type of token. This will always be 'Bearer'.
+        expires_in:
+          type: integer
+          description: The number of seconds until the token expires.
+        scope:
+          type: string
+          description: The scope of the token.
+      required:
+      - access_token
+      - expires_in
+      - scope
+      - token_type
+    APIException:
+      title: APIException
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    OAuth2Application:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The unique, public identifier of your application.
+        client_secret:
+          type: string
+          description: The secret key used to authenticate your application.
+        name:
+          type: string
+          description: The name of your application or project.
+        msg:
+          type: string
+          description: Some additional information about the application.
+      required:
+      - client_id
+      - client_secret
+      - msg
+      - name
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        detail:
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+  securitySchemes:
+    Openverse API Token:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: Openverse documentation
+  url: http://docs.openverse.org/api/user/index.html

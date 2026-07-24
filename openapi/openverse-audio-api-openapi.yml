@@ -1,0 +1,1508 @@
+openapi: 3.0.3
+info:
+  title: Openverse audio API
+  version: 909aa41ddf2115a69a447198b3f49121481e0c6b (v1)
+  x-logo:
+    url: https://raw.githubusercontent.com/WordPress/openverse/HEAD/documentation/meta/brand/logo.svg
+    backgroundColor: '#fafafa'
+  description: '
+
+    Openverse is a search engine for openly-licensed media. The Openverse
+
+    API is a system that allows programmatic access to public domain digital
+
+    media. It is our ambition to index and catalog billions of
+
+    openly-licensed works, including articles, songs, videos, photographs,
+
+    paintings, and more.
+
+
+    Using this API, developers will be able to access the digital commons in
+
+    their own applications. You can see some examples of
+
+    [apps built with Openverse](https://docs.openverse.org/api/reference/made_with_ov.html)
+
+    in our docs.
+
+    '
+  termsOfService: https://docs.openverse.org/terms_of_service.html
+  contact:
+    name: Openverse
+    email: openverse@wordpress.org
+  license:
+    name: MIT License
+    url: https://github.com/WordPress/openverse/blob/main/LICENSE
+tags:
+- name: audio
+  description: These are endpoints pertaining to audio files.
+paths:
+  /v1/audio/:
+    get:
+      operationId: audio_search
+      description: '
+
+        Return audio files that match the query.
+
+
+        This endpoint allows you to search within specific fields, or to retrieve
+
+        a collection of all audio files from a specific source, creator or tag.
+
+        Results are paginated on the basis of the `page` parameter. The `page_size`
+
+        parameter controls the total number of pages.
+
+
+        Although there may be millions of relevant records, only the most relevant
+
+        or the most recent several thousand records can be viewed. This is by design:
+
+        the search endpoint should be used to find the top 10,000 most relevant
+
+        results, not for exhaustive search or bulk download of every barely relevant
+
+        result. As such, the caller should not try to access pages beyond `page_count`,
+
+        or else the server will reject the query.
+
+
+        ### Default search
+
+        The **default search** allows users to find media based on a query string.
+
+        It supports a wide range of optional filters to narrow down search results
+
+        according to specific needs.
+
+
+        By default, this endpoint performs a full-text search for the value of `q` parameter.
+
+        You can search within the `creator`, `title` or `tags` fields by omitting
+
+        the `q` parameter and using one of these field parameters.
+
+        These results can be filtered by `source`, `excluded_source`, `license`, `license_type`, `creator`, `tags`, `title`, `filter_dead`, `extension`, `mature`, `unstable__include_sensitive_results`, `category` and `length`.
+
+
+        The default search results are sorted by relevance.
+
+
+        ### Collection search
+
+        The collection search allows to retrieve a collection of media from a specific source,
+
+        creator or tag. The `unstable__collection` parameter is used to specify the type of collection to retrieve.
+
+
+        - `unstable__collection=tag&unstable__tag=tagName` will return the media with tag `tagName`.
+
+        - `unstable__collection=source&source=sourceName` will return the media from source `sourceName`.
+
+        - `unstable__collection=creator&creator=creatorName&source=sourceName` will return the media by creator `creatorName` at `sourceName`.
+
+
+        Collection results are sorted by the time they were added to Openverse, with the most recent
+
+        additions appearing first. The filters such as `license` are not available for collections.
+
+        '
+      externalDocs:
+        description: Openverse Syntax Guide
+        url: https://openverse.org/search-help
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          default: 1
+        description: The page of results to retrieve. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth).
+      - in: query
+        name: page_size
+        schema:
+          type: integer
+          minimum: 1
+          default: 20
+        description: Number of results to return per page. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth).
+      - in: query
+        name: q
+        schema:
+          type: string
+          title: query
+          minLength: 1
+        description: A query string that should not exceed 200 characters in length
+      - in: query
+        name: source
+        schema:
+          type: string
+          title: provider
+          minLength: 1
+        description: '
+
+          For default search, a comma separated list of data sources.
+
+          When the `unstable__collection` parameter is used, this parameter only accepts a single source.
+
+
+          Valid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.
+
+          '
+      - in: query
+        name: excluded_source
+        schema:
+          type: string
+          title: excluded_provider
+          minLength: 1
+        description: '
+
+          A comma separated list of data sources to exclude from the search.
+
+          Valid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.
+
+          '
+      - in: query
+        name: tags
+        schema:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description: Search by tag only. Cannot be used with `q`. The search is fuzzy, so `tags=cat` will match any value that includes the word `cat`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma.
+      - in: query
+        name: title
+        schema:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description: Search by title only. Cannot be used with `q`. The search is fuzzy, so `title=photo` will match any value that includes the word `photo`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma.
+      - in: query
+        name: creator
+        schema:
+          type: string
+          maxLength: 200
+          minLength: 1
+        description: '
+
+          _When `q` parameter is present, `creator` parameter is ignored._
+
+
+          **Creator collection**
+
+          When used with `unstable__collection=creator&source=sourceName`, returns the collection of media
+
+          by the specified creator. Notice that a single creator''s media items
+
+          can be found on several sources, but this collection only returns the
+
+          items from the specified source.
+
+          This is why for this collection, both the creator and the source
+
+          parameters are required, and matched exactly. For a fuzzy creator search,
+
+          use the default search without the `unstable__collection` parameter.
+
+
+          **Creator search**
+
+          When used without the `unstable__collection` parameter, will search in the creator field only.
+
+          The search is fuzzy, so `creator=john` will match any value that includes the
+
+          word `john`. If the value contains space, items that contain any of
+
+          the words in the value will match. To search for several values,
+
+          join them with a comma.
+
+          '
+      - in: query
+        name: unstable__collection
+        schema:
+          enum:
+          - tag
+          - source
+          - creator
+          type: string
+          title: collection
+          minLength: 1
+        description: '
+
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+
+          The kind of media collection to return.
+
+
+          Must be used with `unstable__tag`, `source` or `creator`+`source`
+
+
+          * `tag` - tag
+
+          * `source` - source
+
+          * `creator` - creator'
+      - in: query
+        name: unstable__tag
+        schema:
+          type: string
+          title: tag
+          maxLength: 200
+          minLength: 1
+        description: '
+
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+
+          _Must be used with `unstable__collection=tag`_
+
+
+          Get the collection of media with a specific tag. Returns the collection of media
+
+          that has the specified tag, matching exactly and entirely.
+
+
+          Differences that will cause tags to not match are:
+
+          - upper and lower case letters
+
+          - diacritical marks
+
+          - hyphenation
+
+          - spacing
+
+          - multi-word tags where the query is only one of the words in the tag
+
+          - multi-word tags where the words are in a different order.
+
+
+          Examples of tags that **do not** match:
+
+          - "Low-Quality" and "low-quality"
+
+          - "jalapeño" and "jalapeno"
+
+          - "Saint Pierre des Champs" and "Saint-Pierre-des-Champs"
+
+          - "dog walking" and "dog  walking" (where the latter has two spaces between the
+
+          last two words, as in a typographical error)
+
+          - "runner" and "marathon runner"
+
+          - "exclaiming loudly" and "loudly exclaiming"
+
+
+          For non-exact or multi-tag matching, using the `tags` query parameter.
+
+          '
+      - in: query
+        name: license
+        schema:
+          type: string
+          title: licenses
+          minLength: 1
+        description: 'A comma separated list of licenses; available licenses include: `by`, `by-nc`, `by-nc-nd`, `by-nc-sa`, `by-nd`, `by-sa`, `cc0`, `nc-sampling+`, `pdm`, and `sampling+`.'
+      - in: query
+        name: license_type
+        schema:
+          type: string
+          minLength: 1
+        description: 'A comma separated list of license types; available license types include: `all`, `all-cc`, `commercial`, and `modification`.'
+      - in: query
+        name: filter_dead
+        schema:
+          type: boolean
+          default: true
+        description: Control whether 404 links are filtered out.
+      - in: query
+        name: extension
+        schema:
+          type: string
+          minLength: 1
+        description: A comma separated list of desired file extensions.
+      - in: query
+        name: mature
+        schema:
+          type: boolean
+          default: false
+        description: Whether to include sensitive content.
+      - in: query
+        name: unstable__sort_by
+        schema:
+          enum:
+          - relevance
+          - indexed_on
+          type: string
+          default: relevance
+          minLength: 1
+        description: '
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+          The field which should be the basis for sorting results.
+
+
+          * `relevance` - Relevance
+
+          * `indexed_on` - Indexing date'
+      - in: query
+        name: unstable__sort_dir
+        schema:
+          enum:
+          - desc
+          - asc
+          type: string
+          default: desc
+          minLength: 1
+        description: '
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+          The direction of sorting. Cannot be applied when sorting by `relevance`.
+
+
+          * `desc` - Descending
+
+          * `asc` - Ascending'
+      - in: query
+        name: unstable__authority
+        schema:
+          type: boolean
+          default: false
+          title: authority
+        description: '
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+          If enabled, the search will add a boost to results that are from authoritative sources.'
+      - in: query
+        name: unstable__authority_boost
+        schema:
+          type: number
+          format: double
+          maximum: 10.0
+          minimum: 0.0
+          default: 1.0
+          title: authority_boost
+        description: '
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+          The boost coefficient to apply to authoritative sources, multiplied with the popularity boost.'
+      - in: query
+        name: unstable__include_sensitive_results
+        schema:
+          type: boolean
+          default: false
+          title: include_sensitive_results
+        description: '
+
+
+
+          _Caution: Parameters prefixed with `unstable__` are experimental and
+
+          may change or be removed without notice in future updates. Use them
+
+          with caution as they are not covered by our API versioning policy._
+
+
+
+          Whether to include results considered sensitive.'
+      - in: query
+        name: category
+        schema:
+          type: string
+          minLength: 1
+        description: 'A comma separated list of categories; available categories include: `audiobook`, `music`, `news`, `podcast`, `pronunciation`, and `sound_effect`.'
+      - in: query
+        name: length
+        schema:
+          type: string
+          minLength: 1
+        description: 'A comma separated list of lengths; available lengths include: `long`, `medium`, `short`, and `shortest`.'
+      - in: query
+        name: peaks
+        schema:
+          type: boolean
+          default: false
+        description: Whether to include the waveform peaks or not
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAudioList'
+              examples:
+                OK:
+                  value:
+                    result_count: 10000
+                    page_count: 20
+                    page_size: 20
+                    page: 1
+                    results:
+                    - id: 8624ba61-57f1-4f98-8a85-ece206c319cf
+                      title: Wish You Were Here
+                      indexed_on: '2022-12-06T06:54:25Z'
+                      foreign_landing_url: https://www.jamendo.com/track/1214935
+                      url: https://mp3d.jamendo.com/download/track/1214935/mp32
+                      creator: The.madpix.project
+                      creator_url: https://www.jamendo.com/artist/441585/the.madpix.project
+                      license: by-nc-sa
+                      license_version: '3.0'
+                      license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
+                      provider: jamendo
+                      source: jamendo
+                      category: music
+                      genres:
+                      - dance
+                      - electronic
+                      - house
+                      filesize: 7139840
+                      filetype: mp3
+                      tags:
+                      - accuracy: null
+                        name: vocal
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: female
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: speed_medium
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: guitar
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: strings
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: energetic
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: acoustic
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: vocal
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: voice
+                        unstable__provider: jamendo
+                      - accuracy: null
+                        name: funkyhouse
+                        unstable__provider: jamendo
+                      alt_files: null
+                      attribution: '"Wish You Were Here" by The.madpix.project is licensed under CC BY-NC-SA 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/.'
+                      fields_matched:
+                      - title
+                      mature: false
+                      audio_set:
+                        title: Wish You Were Here
+                        foreign_landing_url: https://www.jamendo.com/album/145774/wish-you-were-here
+                        creator: The.madpix.project
+                        creator_url: https://www.jamendo.com/artist/441585/the.madpix.project
+                        url: https://usercontent.jamendo.com?type=album&id=145774&width=200
+                        filesize: null
+                        filetype: null
+                      duration: 270000
+                      bit_rate: 128000
+                      sample_rate: 44100
+                      thumbnail: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/thumb/
+                      detail_url: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/
+                      related_url: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/
+                      waveform: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/
+                      unstable__sensitivity: []
+                    warnings:
+                    - code: partially invalid request parameter
+                      message: Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+              examples:
+                BadRequest:
+                  value:
+                    error: InputError
+                    detail: Invalid input given for fields. 'license' -> License 'PDMNBCG' does not exist.
+                    fields:
+                    - license
+                  summary: Bad Request
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthenticated'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Authentication credentials were not provided.
+          description: Unauthorized
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Example 0: Search for audio using single query parameter\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=test\"\n\n\n# Example 1: Search for audio using multiple query parameters\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=test&license=pdm,by&categories=illustration&page_size=1&page=1\"\n\n\n# Example 2: Search for audio that is an exact match of Giacomo Puccini\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=%22Giacomo%20Puccini%22\"\n\n\n# Example 3: Search for audio related to both dog and cat\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog+cat\"\n\n\n# Example 4: Search for audio related to dog or cat, but not necessarily both\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog|cat\"\n\n\n# Example 5: Search for audio related to dog but won't include results related to 'pug'\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog -pug\"\n\n\n# Example 6: Search for audio matching anything with the prefix 'net'\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=net*\"\n\n\n# Example 7: Search for audio matching dogs that are either corgis or labrador\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dogs + (corgis | labrador)\"\n\n\n# Example 8: Search for audio matching strings close to the term theater with a difference of one character\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=theatre~1\"\n"
+  /v1/audio/{identifier}/:
+    get:
+      operationId: audio_detail
+      description: '
+
+        Get the details of a specified audio track.
+
+
+        By using this endpoint, you can obtain info about audio files such as
+
+        `id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `peaks` and `unstable__sensitivity`'
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audio'
+              examples:
+                OK:
+                  value:
+                    id: 8624ba61-57f1-4f98-8a85-ece206c319cf
+                    title: Wish You Were Here
+                    indexed_on: '2022-12-06T06:54:25Z'
+                    foreign_landing_url: https://www.jamendo.com/track/1214935
+                    url: https://mp3d.jamendo.com/download/track/1214935/mp32
+                    creator: The.madpix.project
+                    creator_url: https://www.jamendo.com/artist/441585/the.madpix.project
+                    license: by-nc-sa
+                    license_version: '3.0'
+                    license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
+                    provider: jamendo
+                    source: jamendo
+                    category: music
+                    genres:
+                    - dance
+                    - electronic
+                    - house
+                    filesize: 7139840
+                    filetype: mp3
+                    tags:
+                    - accuracy: null
+                      name: vocal
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: female
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: speed_medium
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: guitar
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: strings
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: energetic
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: acoustic
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: vocal
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: voice
+                      unstable__provider: jamendo
+                    - accuracy: null
+                      name: funkyhouse
+                      unstable__provider: jamendo
+                    alt_files: null
+                    attribution: '"Wish You Were Here" by The.madpix.project is licensed under CC BY-NC-SA 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/.'
+                    fields_matched: []
+                    mature: false
+                    audio_set:
+                      title: Wish You Were Here
+                      foreign_landing_url: https://www.jamendo.com/album/145774/wish-you-were-here
+                      creator: The.madpix.project
+                      creator_url: https://www.jamendo.com/artist/441585/the.madpix.project
+                      url: https://usercontent.jamendo.com?type=album&id=145774&width=200
+                      filesize: null
+                      filetype: null
+                    duration: 270000
+                    bit_rate: 128000
+                    sample_rate: 44100
+                    thumbnail: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/thumb/
+                    detail_url: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/
+                    related_url: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/
+                    waveform: https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/
+                    unstable__sensitivity: []
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Incorrect authentication credentials.
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found.
+                  summary: Not Found
+          description: Not Found
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Get the details of audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/\"\n"
+  /v1/audio/{identifier}/related/:
+    get:
+      operationId: audio_related
+      description: '
+
+        Get related audio files for a specified audio track.
+
+
+        By using this endpoint, you can get the details of related audio such as
+
+        `id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `peaks` and `unstable__sensitivity`.'
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAudioList'
+              examples:
+                OK:
+                  value:
+                    result_count: 10000
+                    page_count: 20
+                    page_size: 20
+                    page: 1
+                    results:
+                    - title: File:Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg
+                      id: 36537842-b067-4ca0-ad67-e00ff2e06b2e
+                      creator: Wolfgang Amadeus Mozart
+                      creator_url: https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart
+                      url: https://upload.wikimedia.org/wikipedia/commons/2/24/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg
+                      provider: wikimedia
+                      source: wikimedia
+                      license: by-sa
+                      license_version: '2.0'
+                      license_url: https://creativecommons.org/licenses/by-sa/2.0/
+                      foreign_landing_url: https://commons.wikimedia.org/w/index.php?curid=3536953
+                      detail_url: https://api.openverse.org/v1/audio/36537842-b067-4ca0-ad67-e00ff2e06b2e
+                      related_url: https://api.openverse.org/v1/recommendations/audio/36537842-b067-4ca0-ad67-e00ff2e06b2e
+                      fields_matched:
+                      - description
+                      - title
+                      tags:
+                      - name: exam
+                      - name: tactics
+                    warnings:
+                    - code: partially invalid request parameter
+                      message: Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Incorrect authentication credentials.
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: An internal server error occurred.
+                  summary: Not Found
+          description: Not Found
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Get related audio files for audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/\"\n"
+  /v1/audio/{identifier}/report/:
+    post:
+      operationId: audio_report
+      description: 'Report an issue about a specified audio track to Openverse.
+
+
+        By using this endpoint, you can report an audio track if it infringes
+
+        copyright, contains mature or sensitive content or some other reason.'
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - audio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioReportRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AudioReportRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioReportRequest'
+        required: true
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioReportRequest'
+              examples:
+                Created:
+                  value:
+                    identifier: 8624ba61-57f1-4f98-8a85-ece206c319cf
+                    reason: mature
+                    description: This audio contains sensitive content
+          description: Created
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+              examples:
+                BadRequest:
+                  value:
+                    detail:
+                      <request parameter>: <error details>
+                  summary: Bad Request
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Incorrect authentication credentials.
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: Not found.
+                  summary: Not Found
+          description: Not Found
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Report an issue about audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  -d '{\"reason\": \"mature\", \"description\": \"This audio contains sensitive content\"}' \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/report/\"\n"
+  /v1/audio/{identifier}/thumb/:
+    get:
+      operationId: audio_thumb
+      description: 'Retrieve the scaled down and compressed thumbnail of the artwork of an
+
+        audio track or its audio set.'
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: query
+        name: full_size
+        schema:
+          type: boolean
+          nullable: true
+          default: false
+        description: whether to render the actual image and not a thumbnail version
+      - in: query
+        name: compressed
+        schema:
+          type: boolean
+          nullable: true
+        description: whether to compress the output image to reduce file size,defaults to opposite of `full_size`
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          description: Thumbnail image
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+          description: ''
+  /v1/audio/{identifier}/waveform/:
+    get:
+      operationId: audio_waveform
+      description: 'Get the waveform peaks for an audio track.
+
+
+        The peaks are provided as a list of numbers, each of these numbers being
+
+        a fraction between 0 and 1. The list contains approximately 1000 numbers,
+
+        although it can be slightly higher or lower, depending on the track''s length.'
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioWaveform'
+              examples:
+                OK:
+                  value:
+                    len: 1083
+                    points:
+                    - 0.61275
+                    - 0.19593
+                    - 0.74023
+                    - 0.00089
+                    - 0.00043
+                    - 0.00049
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Incorrect authentication credentials.
+          description: Unauthorized
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                NotFound:
+                  value:
+                    detail: An internal server error occurred.
+                  summary: Not Found
+          description: Not Found
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Get the waveform of audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  -H \"Content-Type: application/json\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/\"\n"
+  /v1/audio/stats/:
+    get:
+      operationId: audio_stats
+      description: '
+
+        Get a list of all content sources and their respective number of
+
+        audio files in the Openverse catalog.
+
+
+        By using this endpoint, you can obtain info about content sources such
+
+        as `source_name`, `display_name`, `source_url`, `logo_url` and `media_count`.'
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Source'
+              examples:
+                OK:
+                  value:
+                  - source_name: freesound
+                    display_name: Freesound
+                    source_url: https://freesound.org/
+                    logo_url: null
+                    media_count: 827
+          description: OK
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+              examples:
+                Unauthorized:
+                  value:
+                    detail: Incorrect authentication credentials.
+          description: Unauthorized
+      x-codeSamples:
+      - lang: cURL
+        source: "\n# Get the statistics for audio sources\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/stats/\"\n"
+  /v1/images/{identifier}/thumb/:
+    get:
+      operationId: images_thumb
+      description: Retrieve the scaled down and compressed thumbnail of the image.
+      parameters:
+      - in: path
+        name: identifier
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: query
+        name: full_size
+        schema:
+          type: boolean
+          nullable: true
+          default: false
+        description: whether to render the actual image and not a thumbnail version
+      - in: query
+        name: compressed
+        schema:
+          type: boolean
+          nullable: true
+        description: whether to compress the output image to reduce file size,defaults to opposite of `full_size`
+      tags:
+      - audio
+      security:
+      - Openverse API Token: []
+      - {}
+      responses:
+        '200':
+          description: Thumbnail image
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationFailed'
+          description: ''
+components:
+  schemas:
+    AudioWaveform:
+      type: object
+      properties:
+        len:
+          type: integer
+          readOnly: true
+        points:
+          type: array
+          items:
+            type: number
+            format: double
+            maximum: 1
+            minimum: 0
+      required:
+      - len
+      - points
+    ReasonEnum:
+      enum:
+      - mature
+      - dmca
+      - other
+      type: string
+      description: '* `mature` - mature
+
+        * `dmca` - dmca
+
+        * `other` - other'
+    AudioReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
+          type: string
+          nullable: true
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
+    Tag:
+      type: object
+      description: This output serializer serializes a singular tag.
+      properties:
+        name:
+          type: string
+          description: The name of a detailed tag.
+        accuracy:
+          type: number
+          format: double
+          nullable: true
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
+          type: string
+          nullable: true
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
+      required:
+      - name
+      - unstable__provider
+    AudioAltFile:
+      type: object
+      description: 'A set of alternative files for a single audio object,
+
+        rendered as a part of the ``AudioSerializer`` output.'
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the alternative file.
+        bit_rate:
+          type: integer
+          minimum: 0
+          description: Bit rate of the alternative file.
+        filesize:
+          type: integer
+          minimum: 0
+          description: Size of the alternative file in bytes.
+        filetype:
+          type: string
+          description: File type of the alternative file.
+        sample_rate:
+          type: integer
+          minimum: 0
+          description: Sample rate of the alternative file.
+      required:
+      - filetype
+      - url
+    Audio:
+      type: object
+      description: A single audio file. Used in search results.
+      properties:
+        id:
+          type: string
+          description: Our unique identifier for an open-licensed work.
+        title:
+          type: string
+          nullable: true
+          description: The name of the media.
+        indexed_on:
+          type: string
+          format: date-time
+          description: The timestamp of when the media was indexed by Openverse.
+        foreign_landing_url:
+          type: string
+          nullable: true
+          description: The landing page of the work.
+        url:
+          type: string
+          nullable: true
+          description: The actual URL to the media file.
+          maxLength: 1000
+        creator:
+          type: string
+          nullable: true
+          description: The name of the media creator.
+        creator_url:
+          type: string
+          nullable: true
+          description: A direct link to the media creator.
+          maxLength: 2000
+        license:
+          type: string
+          description: The name of license for the media.
+          maxLength: 50
+        license_version:
+          type: string
+          nullable: true
+          description: The version of the media license.
+          maxLength: 25
+        license_url:
+          type: string
+          nullable: true
+          description: A direct link to the license deed or legal terms.
+          readOnly: true
+        provider:
+          type: string
+          nullable: true
+          description: The content provider, e.g. Flickr, Jamendo...
+          maxLength: 80
+        source:
+          type: string
+          nullable: true
+          description: 'The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.'
+          maxLength: 80
+        category:
+          type: string
+          nullable: true
+          description: The top-level classification of this media file.
+          maxLength: 80
+        genres:
+          type: array
+          items:
+            type: string
+            maxLength: 80
+          nullable: true
+          description: An array of audio genres such as `rock`, `electronic` for `music` category, or `politics`, `sport`, `education` for `podcast` category
+        filesize:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number in bytes, e.g. 1024.
+        filetype:
+          type: string
+          nullable: true
+          description: The type of the file, related to the file extension.
+          maxLength: 80
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          nullable: true
+          description: Tags with detailed metadata, such as accuracy.
+        alt_files:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioAltFile'
+          readOnly: true
+          nullable: true
+          description: JSON describing alternative files for this audio.
+        attribution:
+          type: string
+          nullable: true
+          description: Legally valid attribution for the media item in plain-text English.
+          readOnly: true
+        fields_matched:
+          type: array
+          items: {}
+          nullable: true
+          description: List the fields that matched the query for this result.
+        mature:
+          type: boolean
+          description: Whether the media item is marked as mature
+        audio_set:
+          allOf:
+          - $ref: '#/components/schemas/AudioSet'
+          readOnly: true
+          nullable: true
+          description: Reference to set of which this track is a part.
+        duration:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: The time length of the audio file in milliseconds.
+        bit_rate:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number in bits per second, eg. 128000.
+        sample_rate:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number in hertz, eg. 44100.
+        thumbnail:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+          description: A direct link to the miniature artwork.
+        detail_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: A direct link to the detail view of this audio file.
+        related_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: A link to an endpoint that provides similar audio files.
+        waveform:
+          type: string
+          format: uri
+          readOnly: true
+          description: A direct link to the waveform peaks.
+      required:
+      - alt_files
+      - attribution
+      - audio_set
+      - detail_url
+      - fields_matched
+      - id
+      - indexed_on
+      - license
+      - license_url
+      - mature
+      - related_url
+      - tags
+      - thumbnail
+      - waveform
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        detail:
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    PaginatedAudioList:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          description: The total number of items returned by search result.
+          example: 10000
+        page_count:
+          type: integer
+          description: The total number of pages returned by search result.
+          example: 20
+        page_size:
+          type: integer
+          description: The number of items per page.
+          example: 20
+        page:
+          type: integer
+          description: The current page number returned in the response.
+          example: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Audio'
+        warnings:
+          type: array
+          items:
+            type: object
+          description: Warnings pertinent to the request. If there are no warnings, this property will not be present on the response. Warnings are non-critical problems with the request. Responses with warnings should be treated as unstable. Warning descriptions must not be treated as machine readable and their schema can change at any time.
+          example:
+          - code: partially invalid request parameter
+            message: Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.
+      required:
+      - page_count
+      - page_size
+      - page
+      - results
+      - result_count
+    AudioSet:
+      type: object
+      description: An audio set, rendered as a part of the ``AudioSerializer`` output.
+      properties:
+        title:
+          type: string
+          nullable: true
+          description: The name of the media.
+        foreign_landing_url:
+          type: string
+          nullable: true
+          description: The landing page of the work.
+        creator:
+          type: string
+          nullable: true
+          description: The name of the media creator.
+        creator_url:
+          type: string
+          nullable: true
+          description: A direct link to the media creator.
+          maxLength: 2000
+        url:
+          type: string
+          nullable: true
+          description: The actual URL to the media file.
+          maxLength: 1000
+        filesize:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          description: Number in bytes, e.g. 1024.
+        filetype:
+          type: string
+          nullable: true
+          description: The type of the file, related to the file extension.
+          maxLength: 80
+  securitySchemes:
+    Openverse API Token:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: Openverse documentation
+  url: http://docs.openverse.org/api/user/index.html
