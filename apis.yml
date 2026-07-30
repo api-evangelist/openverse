@@ -5,6 +5,19 @@ description: >
   from cultural institutions, museums, and creative commons sources including
   Flickr, Wikimedia Commons, iNaturalist, Europeana, Freesound, Jamendo, and
   more. Built by WordPress/Automattic under Creative Commons licensing principles.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://openverse.org/openverse-logo.svg
 tags:
   - Images
@@ -17,44 +30,173 @@ tags:
   - Museums
 url: https://openverse.org
 apis:
-  - name: Openverse API
-    description: >
-      REST API providing search and retrieval of openly-licensed images and audio
-      from 800M+ works across cultural institutions, museums, and creative commons
-      sources. Supports full-text search, license filtering, source filtering, and
-      media metadata retrieval. OAuth2 authentication available for higher rate limits.
-    image: https://openverse.org/openverse-logo.svg
-    humanURL: https://api.openverse.org/v1/
-    baseURL: https://api.openverse.org/v1
-    tags:
-      - Images
-      - Audio
-      - Creative Commons
-      - Search
-      - Open Media
-    properties:
-      - type: Documentation
-        url: https://docs.openverse.org/
-      - type: OpenAPI
-        url: https://api.openverse.org/v1/schema/?format=json
-      - type: Authentication
-        url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
-      - type: TermsOfService
-        url: https://api.openverse.org/v1/terms_of_use/
-      - type: GitHubRepository
-        url: https://github.com/WordPress/openverse
-      - type: NPMPackage
-        url: https://www.npmjs.com/package/@openverse/api-client
-      - type: Plans
-        url: plans/plans.yml
-      - type: RateLimits
-        url: rate-limits/rate-limits.yml
-      - type: FinOps
-        url: finops/finops.yml
-    contact:
-      - FN: Openverse Team
-        url: https://make.wordpress.org/openverse/
-    x-apis-io-score: 0
+- aid: openverse:openverse-audio-api
+  name: Openverse audio API
+  description: These are endpoints pertaining to audio files.
+  humanURL: https://api.openverse.org/v1/
+  baseURL: https://api.openverse.org/v1
+  tags:
+  - audio
+  properties:
+  - type: OpenAPI
+    url: openapi/openverse-audio-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openverse.org/
+  - type: Authentication
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+  - type: TermsOfService
+    url: https://api.openverse.org/v1/terms_of_use/
+  - type: GitHubRepository
+    url: https://github.com/WordPress/openverse
+  - type: NPMPackage
+    url: https://www.npmjs.com/package/@openverse/api-client
+  - type: Plans
+    url: plans/plans.yml
+  - type: RateLimits
+    url: rate-limits/rate-limits.yml
+  - type: FinOps
+    url: finops/finops.yml
+- aid: openverse:openverse-auth-api
+  name: Openverse auth API
+  description: >-
+    Openverse provides free and open access to the Openverse API to
+
+    anonymous and registered users. [Refer to the API documentation
+
+    site for information on how to register](https://api.openverse.org/v1/#tag/auth).
+
+
+    All Openverse API users are subject to rate limits and restrictions
+
+    on how much of Openverse's dataset can be accessed through the API.
+
+    [Individuals should contact Openverse to request expanded access to
+
+    the API](https://github.com/WordPress/openverse#keep-in-touch).
+
+    Requests are considered on a case-by-case basis and are subject to
+
+    evaluation in light of [Openverse's Terms of Service](https://docs.openverse.org/terms_of_service.html).
+
+    Escalated access may be revoked at any time.
+
+
+    To authenticate yourself, you must sign up for an API key using
+
+    the `register` endpoint and then get an access token using the
+
+    `token` endpoint. Read on to know about these endpoints.
+
+
+    In subsequent requests, include your access token as a bearer
+
+    token in the `Authorization` header.
+
+
+    ```
+
+    Authorization: Bearer <access_token>
+
+    ```
+
+
+    ### Rate limits
+
+
+    Openverse endpoints are rate limited. Anonymous requests should be
+
+    sufficient for most users. Indeed, https://openverse.org itself
+
+    operates using anonymous requests from the browser.
+
+
+    Registered users are automatically granted slightly higher limits.
+
+    Further increases to rate limits are available upon request (see above).
+
+
+    Every Openverse API response that was subject to rate-limits includes
+
+    headers outlining the permitted and available usage. Exceeding the limit
+
+    will result in '429: Too Many Requests' responses.
+
+
+    ### Pagination
+
+
+    Openverse's dataset is valuable, and the
+
+    [Terms of Service](https://docs.openverse.org/terms_of_service.html)
+
+    disallow scraping under all circumstances. As such, pagination
+
+    for anonymous users is limited, accommodating only the typical
+
+    usage on https://openverse.org. Pagination is limited in terms
+
+    of the size of individual pages and the total number of works
+
+    visible for a query (pagination depth).
+
+
+    Authenticated users are subject to the same limit of total works
+
+    available for a query, but may request larger individual pages.
+
+
+    Increases to pagination limits on page size and total depth are
+
+    available upon request (see above).
+  humanURL: https://api.openverse.org/v1/
+  baseURL: https://api.openverse.org/v1
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/openverse-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openverse.org/
+  - type: Authentication
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+  - type: TermsOfService
+    url: https://api.openverse.org/v1/terms_of_use/
+  - type: GitHubRepository
+    url: https://github.com/WordPress/openverse
+  - type: NPMPackage
+    url: https://www.npmjs.com/package/@openverse/api-client
+  - type: Plans
+    url: plans/plans.yml
+  - type: RateLimits
+    url: rate-limits/rate-limits.yml
+  - type: FinOps
+    url: finops/finops.yml
+- aid: openverse:openverse-images-api
+  name: Openverse images API
+  description: These are endpoints pertaining to images.
+  humanURL: https://api.openverse.org/v1/
+  baseURL: https://api.openverse.org/v1
+  tags:
+  - images
+  properties:
+  - type: OpenAPI
+    url: openapi/openverse-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.openverse.org/
+  - type: Authentication
+    url: https://docs.openverse.org/api/reference/authentication_and_throttling.html
+  - type: TermsOfService
+    url: https://api.openverse.org/v1/terms_of_use/
+  - type: GitHubRepository
+    url: https://github.com/WordPress/openverse
+  - type: NPMPackage
+    url: https://www.npmjs.com/package/@openverse/api-client
+  - type: Plans
+    url: plans/plans.yml
+  - type: RateLimits
+    url: rate-limits/rate-limits.yml
+  - type: FinOps
+    url: finops/finops.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
