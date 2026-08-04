@@ -1,0 +1,18 @@
+{
+  "provider": "openverse",
+  "sources": [
+    "openverse-audio-api-openapi.yml",
+    "openverse-auth-api-openapi.yml",
+    "openverse-images-api-openapi.yml"
+  ],
+  "outputs": [
+    "openverse-audio-api-openapi.yml",
+    "openverse-auth-api-openapi.yml",
+    "openverse-images-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
