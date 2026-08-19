@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Openverse audio auth API",
+    "version": "909aa41ddf2115a69a447198b3f49121481e0c6b (v1)"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "register",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/auth_tokens/register/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an application to access to API via OAuth2.\n\nUpon registering, you will receive a `client_id` and `client_secret`,\nwhich you can then use to authenticate using the standard OAuth2 flow.\n\n> ⚠️ **WARNINGS:**\n> - Store your `client_id` and `client_secret` because you will not be\n>   able to retrieve them later.\n> - You must keep `client_secret` confidential, as anybody with your\n>   `client_secret` can impersonate your application.\n\nYou must verify your email address by click the link sent"
+        },
+        {
+          "info": {
+            "name": "token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/auth_tokens/token/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Get an access token using client credentials.\n\nTo authenticate your requests to the Openverse API, you need to provide\nan access token as a bearer token in the `Authorization` header of your\nrequests. This endpoint takes your client ID and secret, and issues an\naccess token.\n\n> **NOTE:** This endpoint only accepts data as\n> `application/x-www-form-urlencoded`. Any other encoding will not work.\n\nOnce your access token expires, you can request another one from this\nendpoint."
+        },
+        {
+          "info": {
+            "name": "key_info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/rate_limit/",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get information about your API key.\n\nYou can use this endpoint to get information about your API key such as\n`requests_this_minute`, `requests_today`, and `rate_limit_model`.\n\n> ℹ️ **NOTE:** If you get a 401 Unauthorized, it means your token is invalid\n> (malformed, non-existent, or expired)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

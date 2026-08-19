@@ -1,0 +1,348 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Openverse audio API",
+    "version": "909aa41ddf2115a69a447198b3f49121481e0c6b (v1)"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "audio",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "audio_search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to retrieve. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "A query string that should not exceed 200 characters in length"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "\nFor default search, a comma separated list of data sources.\nWhen the `unstable__collection` parameter is used, this parameter only accepts a single source.\n\nValid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.\n"
+              },
+              {
+                "name": "excluded_source",
+                "value": "",
+                "type": "query",
+                "description": "\nA comma separated list of data sources to exclude from the search.\nValid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.\n"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "Search by tag only. Cannot be used with `q`. The search is fuzzy, so `tags=cat` will match any value that includes the word `cat`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma."
+              },
+              {
+                "name": "title",
+                "value": "",
+                "type": "query",
+                "description": "Search by title only. Cannot be used with `q`. The search is fuzzy, so `title=photo` will match any value that includes the word `photo`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma."
+              },
+              {
+                "name": "creator",
+                "value": "",
+                "type": "query",
+                "description": "\n_When `q` parameter is present, `creator` parameter is ignored._\n\n**Creator collection**\nWhen used with `unstable__collection=creator&source=sourceName`, returns the collection of media\nby the specified creator. Notice that a single creator's media items\ncan be found on several sources, but this collection only returns the\nitems from the specified source.\nThis is why for this collection, both the creator and the source\nparameters are required, and matched exactly. For a fuzzy creator search,\nuse the default search without the `unstable__collection` parameter.\n\n**Creator search**\nWhen used without the `unstable__collection` parameter, will search in the creator field only.\nThe search is fuzzy, so `creator=john` will match any value that includes the\nword `john`. If the value contains space, items that contain any of\nthe words in the value will match. To search for several values,\njoin them with a comma.\n"
+              },
+              {
+                "name": "unstable__collection",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\nThe kind of media collection to return.\n\nMust be used with `unstable__tag`, `source` or `creator`+`source`\n\n* `tag` - tag\n* `source` - source\n* `creator` - creator"
+              },
+              {
+                "name": "unstable__tag",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\n_Must be used with `unstable__collection=tag`_\n\nGet the collection of media with a specific tag. Returns the collection of media\nthat has the specified tag, matching exactly and entirely.\n\nDifferences that will cause tags to not match are:\n- upper and lower case letters\n- diacritical marks\n- hyphenation\n- spacing\n- multi-word tags where the query is only one of the words in the tag\n- multi-word tags where the words are in a different order.\n\nExamples of tags that **do not** match:\n- \"Low-Quality\" and \"low-quality\"\n- \"jalapeño\" and \"jalapeno\"\n- \"Saint Pierre des Champs\" and \"Saint-Pierre-des-Champs\"\n- \"dog walking\" and \"dog  walking\" (where the latter has two spaces between the\nlast two words, as in a typographical error)\n- \"runner\" and \"marathon runner\"\n- \"exclaiming loudly\" and \"loudly exclaiming\"\n\nFor non-exact or multi-tag matching, using the `tags` query parameter.\n"
+              },
+              {
+                "name": "license",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of licenses; available licenses include: `by`, `by-nc`, `by-nc-nd`, `by-nc-sa`, `by-nd`, `by-sa`, `cc0`, `nc-sampling+`, `pdm`, and `sampling+`."
+              },
+              {
+                "name": "license_type",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of license types; available license types include: `all`, `all-cc`, `commercial`, and `modification`."
+              },
+              {
+                "name": "filter_dead",
+                "value": "",
+                "type": "query",
+                "description": "Control whether 404 links are filtered out."
+              },
+              {
+                "name": "extension",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of desired file extensions."
+              },
+              {
+                "name": "mature",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include sensitive content."
+              },
+              {
+                "name": "unstable__sort_by",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe field which should be the basis for sorting results.\n\n* `relevance` - Relevance\n* `indexed_on` - Indexing date"
+              },
+              {
+                "name": "unstable__sort_dir",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe direction of sorting. Cannot be applied when sorting by `relevance`.\n\n* `desc` - Descending\n* `asc` - Ascending"
+              },
+              {
+                "name": "unstable__authority",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nIf enabled, the search will add a boost to results that are from authoritative sources."
+              },
+              {
+                "name": "unstable__authority_boost",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe boost coefficient to apply to authoritative sources, multiplied with the popularity boost."
+              },
+              {
+                "name": "unstable__include_sensitive_results",
+                "value": "",
+                "type": "query",
+                "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nWhether to include results considered sensitive."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of categories; available categories include: `audiobook`, `music`, `news`, `podcast`, `pronunciation`, and `sound_effect`."
+              },
+              {
+                "name": "length",
+                "value": "",
+                "type": "query",
+                "description": "A comma separated list of lengths; available lengths include: `long`, `medium`, `short`, and `shortest`."
+              },
+              {
+                "name": "peaks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the waveform peaks or not"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "\nReturn audio files that match the query.\n\nThis endpoint allows you to search within specific fields, or to retrieve\na collection of all audio files from a specific source, creator or tag.\nResults are paginated on the basis of the `page` parameter. The `page_size`\nparameter controls the total number of pages.\n\nAlthough there may be millions of relevant records, only the most relevant\nor the most recent several thousand records can be viewed. This is by design:\nthe search endpoint should be used "
+        },
+        {
+          "info": {
+            "name": "audio_detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/:identifier/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "\nGet the details of a specified audio track.\n\nBy using this endpoint, you can obtain info about audio files such as\n`id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `peaks` and `uns"
+        },
+        {
+          "info": {
+            "name": "audio_related",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/:identifier/related/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "\nGet related audio files for a specified audio track.\n\nBy using this endpoint, you can get the details of related audio such as\n`id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `pea"
+        },
+        {
+          "info": {
+            "name": "audio_report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/audio/:identifier/report/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Report an issue about a specified audio track to Openverse.\n\nBy using this endpoint, you can report an audio track if it infringes\ncopyright, contains mature or sensitive content or some other reason."
+        },
+        {
+          "info": {
+            "name": "audio_thumb",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/:identifier/thumb/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "full_size",
+                "value": "",
+                "type": "query",
+                "description": "whether to render the actual image and not a thumbnail version"
+              },
+              {
+                "name": "compressed",
+                "value": "",
+                "type": "query",
+                "description": "whether to compress the output image to reduce file size,defaults to opposite of `full_size`"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the scaled down and compressed thumbnail of the artwork of an\naudio track or its audio set."
+        },
+        {
+          "info": {
+            "name": "audio_waveform",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/:identifier/waveform/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the waveform peaks for an audio track.\n\nThe peaks are provided as a list of numbers, each of these numbers being\na fraction between 0 and 1. The list contains approximately 1000 numbers,\nalthough it can be slightly higher or lower, depending on the track's length."
+        },
+        {
+          "info": {
+            "name": "audio_stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/audio/stats/",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "\nGet a list of all content sources and their respective number of\naudio files in the Openverse catalog.\n\nBy using this endpoint, you can obtain info about content sources such\nas `source_name`, `display_name`, `source_url`, `logo_url` and `media_count`."
+        },
+        {
+          "info": {
+            "name": "images_thumb",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/images/:identifier/thumb/",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "full_size",
+                "value": "",
+                "type": "query",
+                "description": "whether to render the actual image and not a thumbnail version"
+              },
+              {
+                "name": "compressed",
+                "value": "",
+                "type": "query",
+                "description": "whether to compress the output image to reduce file size,defaults to opposite of `full_size`"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the scaled down and compressed thumbnail of the image."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

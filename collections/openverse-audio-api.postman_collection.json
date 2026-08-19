@@ -1,0 +1,2358 @@
+{
+  "item": [
+    {
+      "id": "aa60d577-4c66-4551-9acf-fd3791cee191",
+      "name": "audio",
+      "description": {
+        "content": "These are endpoints pertaining to audio files.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5f3ba82-fe4e-40a8-acec-9cf802a752d6",
+          "name": "audio search",
+          "request": {
+            "name": "audio search",
+            "description": {
+              "content": "\nReturn audio files that match the query.\n\nThis endpoint allows you to search within specific fields, or to retrieve\na collection of all audio files from a specific source, creator or tag.\nResults are paginated on the basis of the `page` parameter. The `page_size`\nparameter controls the total number of pages.\n\nAlthough there may be millions of relevant records, only the most relevant\nor the most recent several thousand records can be viewed. This is by design:\nthe search endpoint should be used to find the top 10,000 most relevant\nresults, not for exhaustive search or bulk download of every barely relevant\nresult. As such, the caller should not try to access pages beyond `page_count`,\nor else the server will reject the query.\n\n### Default search\nThe **default search** allows users to find media based on a query string.\nIt supports a wide range of optional filters to narrow down search results\naccording to specific needs.\n\nBy default, this endpoint performs a full-text search for the value of `q` parameter.\nYou can search within the `creator`, `title` or `tags` fields by omitting\nthe `q` parameter and using one of these field parameters.\nThese results can be filtered by `source`, `excluded_source`, `license`, `license_type`, `creator`, `tags`, `title`, `filter_dead`, `extension`, `mature`, `unstable__include_sensitive_results`, `category` and `length`.\n\nThe default search results are sorted by relevance.\n\n### Collection search\nThe collection search allows to retrieve a collection of media from a specific source,\ncreator or tag. The `unstable__collection` parameter is used to specify the type of collection to retrieve.\n\n- `unstable__collection=tag&unstable__tag=tagName` will return the media with tag `tagName`.\n- `unstable__collection=source&source=sourceName` will return the media from source `sourceName`.\n- `unstable__collection=creator&creator=creatorName&source=sourceName` will return the media by creator `creatorName` at `sourceName`.\n\nCollection results are sorted by the time they were added to Openverse, with the most recent\nadditions appearing first. The filters such as `license` are not available for collections.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "The page of results to retrieve. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "20",
+                  "description": "Number of results to return per page. This parameter is subject to limitations based on authentication and access level. For details, refer to [the authentication documentation](#tag/auth)."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "A query string that should not exceed 200 characters in length"
+                },
+                {
+                  "disabled": false,
+                  "key": "source",
+                  "value": "<string>",
+                  "description": "\nFor default search, a comma separated list of data sources.\nWhen the `unstable__collection` parameter is used, this parameter only accepts a single source.\n\nValid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "excluded_source",
+                  "value": "<string>",
+                  "description": "\nA comma separated list of data sources to exclude from the search.\nValid values are `source_name`s from the stats endpoint: https://api.openverse.org/v1/audio/stats/.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "Search by tag only. Cannot be used with `q`. The search is fuzzy, so `tags=cat` will match any value that includes the word `cat`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "Search by title only. Cannot be used with `q`. The search is fuzzy, so `title=photo` will match any value that includes the word `photo`. If the value contains space, items that contain any of the words in the value will match. To search for several values, join them with a comma."
+                },
+                {
+                  "disabled": false,
+                  "key": "creator",
+                  "value": "<string>",
+                  "description": "\n_When `q` parameter is present, `creator` parameter is ignored._\n\n**Creator collection**\nWhen used with `unstable__collection=creator&source=sourceName`, returns the collection of media\nby the specified creator. Notice that a single creator's media items\ncan be found on several sources, but this collection only returns the\nitems from the specified source.\nThis is why for this collection, both the creator and the source\nparameters are required, and matched exactly. For a fuzzy creator search,\nuse the default search without the `unstable__collection` parameter.\n\n**Creator search**\nWhen used without the `unstable__collection` parameter, will search in the creator field only.\nThe search is fuzzy, so `creator=john` will match any value that includes the\nword `john`. If the value contains space, items that contain any of\nthe words in the value will match. To search for several values,\njoin them with a comma.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__collection",
+                  "value": "<string>",
+                  "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\nThe kind of media collection to return.\n\nMust be used with `unstable__tag`, `source` or `creator`+`source`\n\n* `tag` - tag\n* `source` - source\n* `creator` - creator"
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__tag",
+                  "value": "<string>",
+                  "description": "\n\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\n\n_Must be used with `unstable__collection=tag`_\n\nGet the collection of media with a specific tag. Returns the collection of media\nthat has the specified tag, matching exactly and entirely.\n\nDifferences that will cause tags to not match are:\n- upper and lower case letters\n- diacritical marks\n- hyphenation\n- spacing\n- multi-word tags where the query is only one of the words in the tag\n- multi-word tags where the words are in a different order.\n\nExamples of tags that **do not** match:\n- \"Low-Quality\" and \"low-quality\"\n- \"jalapeño\" and \"jalapeno\"\n- \"Saint Pierre des Champs\" and \"Saint-Pierre-des-Champs\"\n- \"dog walking\" and \"dog  walking\" (where the latter has two spaces between the\nlast two words, as in a typographical error)\n- \"runner\" and \"marathon runner\"\n- \"exclaiming loudly\" and \"loudly exclaiming\"\n\nFor non-exact or multi-tag matching, using the `tags` query parameter.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "license",
+                  "value": "<string>",
+                  "description": "A comma separated list of licenses; available licenses include: `by`, `by-nc`, `by-nc-nd`, `by-nc-sa`, `by-nd`, `by-sa`, `cc0`, `nc-sampling+`, `pdm`, and `sampling+`."
+                },
+                {
+                  "disabled": false,
+                  "key": "license_type",
+                  "value": "<string>",
+                  "description": "A comma separated list of license types; available license types include: `all`, `all-cc`, `commercial`, and `modification`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter_dead",
+                  "value": "true",
+                  "description": "Control whether 404 links are filtered out."
+                },
+                {
+                  "disabled": false,
+                  "key": "extension",
+                  "value": "<string>",
+                  "description": "A comma separated list of desired file extensions."
+                },
+                {
+                  "disabled": false,
+                  "key": "mature",
+                  "value": "false",
+                  "description": "Whether to include sensitive content."
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__sort_by",
+                  "value": "relevance",
+                  "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe field which should be the basis for sorting results.\n\n* `relevance` - Relevance\n* `indexed_on` - Indexing date"
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__sort_dir",
+                  "value": "desc",
+                  "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe direction of sorting. Cannot be applied when sorting by `relevance`.\n\n* `desc` - Descending\n* `asc` - Ascending"
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__authority",
+                  "value": "false",
+                  "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nIf enabled, the search will add a boost to results that are from authoritative sources."
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__authority_boost",
+                  "value": "1",
+                  "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nThe boost coefficient to apply to authoritative sources, multiplied with the popularity boost."
+                },
+                {
+                  "disabled": false,
+                  "key": "unstable__include_sensitive_results",
+                  "value": "false",
+                  "description": "\n\n\n_Caution: Parameters prefixed with `unstable__` are experimental and\nmay change or be removed without notice in future updates. Use them\nwith caution as they are not covered by our API versioning policy._\n\n\nWhether to include results considered sensitive."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "A comma separated list of categories; available categories include: `audiobook`, `music`, `news`, `podcast`, `pronunciation`, and `sound_effect`."
+                },
+                {
+                  "disabled": false,
+                  "key": "length",
+                  "value": "<string>",
+                  "description": "A comma separated list of lengths; available lengths include: `long`, `medium`, `short`, and `shortest`."
+                },
+                {
+                  "disabled": false,
+                  "key": "peaks",
+                  "value": "false",
+                  "description": "Whether to include the waveform peaks or not"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2740db08-ccba-43d1-b849-251122c16b14",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "creator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__collection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_dead",
+                      "value": "true"
+                    },
+                    {
+                      "key": "extension",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mature",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__sort_by",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "unstable__sort_dir",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "unstable__authority",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__authority_boost",
+                      "value": "1"
+                    },
+                    {
+                      "key": "unstable__include_sensitive_results",
+                      "value": "false"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "length",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peaks",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 10000,\n  \"page_count\": 20,\n  \"page_size\": 20,\n  \"page\": 1,\n  \"results\": [\n    {\n      \"id\": \"8624ba61-57f1-4f98-8a85-ece206c319cf\",\n      \"title\": \"Wish You Were Here\",\n      \"indexed_on\": \"2022-12-06T06:54:25Z\",\n      \"foreign_landing_url\": \"https://www.jamendo.com/track/1214935\",\n      \"url\": \"https://mp3d.jamendo.com/download/track/1214935/mp32\",\n      \"creator\": \"The.madpix.project\",\n      \"creator_url\": \"https://www.jamendo.com/artist/441585/the.madpix.project\",\n      \"license\": \"by-nc-sa\",\n      \"license_version\": \"3.0\",\n      \"license_url\": \"https://creativecommons.org/licenses/by-nc-sa/3.0/\",\n      \"provider\": \"jamendo\",\n      \"source\": \"jamendo\",\n      \"category\": \"music\",\n      \"genres\": [\n        \"dance\",\n        \"electronic\",\n        \"house\"\n      ],\n      \"filesize\": 7139840,\n      \"filetype\": \"mp3\",\n      \"tags\": [\n        {\n          \"accuracy\": null,\n          \"name\": \"vocal\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"female\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"speed_medium\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"guitar\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"strings\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"energetic\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"acoustic\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"vocal\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"voice\",\n          \"unstable__provider\": \"jamendo\"\n        },\n        {\n          \"accuracy\": null,\n          \"name\": \"funkyhouse\",\n          \"unstable__provider\": \"jamendo\"\n        }\n      ],\n      \"alt_files\": null,\n      \"attribution\": \"\\\"Wish You Were Here\\\" by The.madpix.project is licensed under CC BY-NC-SA 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/.\",\n      \"fields_matched\": [\n        \"title\"\n      ],\n      \"mature\": false,\n      \"audio_set\": {\n        \"title\": \"Wish You Were Here\",\n        \"foreign_landing_url\": \"https://www.jamendo.com/album/145774/wish-you-were-here\",\n        \"creator\": \"The.madpix.project\",\n        \"creator_url\": \"https://www.jamendo.com/artist/441585/the.madpix.project\",\n        \"url\": \"https://usercontent.jamendo.com?type=album&id=145774&width=200\",\n        \"filesize\": null,\n        \"filetype\": null\n      },\n      \"duration\": 270000,\n      \"bit_rate\": 128000,\n      \"sample_rate\": 44100,\n      \"thumbnail\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/thumb/\",\n      \"detail_url\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/\",\n      \"related_url\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/\",\n      \"waveform\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/\",\n      \"unstable__sensitivity\": []\n    }\n  ],\n  \"warnings\": [\n    {\n      \"code\": \"partially invalid request parameter\",\n      \"message\": \"Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "283d66cc-3c3b-4533-a224-3e073722f326",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "creator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__collection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_dead",
+                      "value": "true"
+                    },
+                    {
+                      "key": "extension",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mature",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__sort_by",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "unstable__sort_dir",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "unstable__authority",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__authority_boost",
+                      "value": "1"
+                    },
+                    {
+                      "key": "unstable__include_sensitive_results",
+                      "value": "false"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "length",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peaks",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"InputError\",\n  \"detail\": \"Invalid input given for fields. 'license' -> License 'PDMNBCG' does not exist.\",\n  \"fields\": [\n    \"license\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "074b24ee-0a6a-4c38-86eb-1c1946ca7d2f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "20"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_source",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "title",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "creator",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__collection",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "unstable__tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "license_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_dead",
+                      "value": "true"
+                    },
+                    {
+                      "key": "extension",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mature",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__sort_by",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "unstable__sort_dir",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "unstable__authority",
+                      "value": "false"
+                    },
+                    {
+                      "key": "unstable__authority_boost",
+                      "value": "1"
+                    },
+                    {
+                      "key": "unstable__include_sensitive_results",
+                      "value": "false"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "length",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "peaks",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Authentication credentials were not provided.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38f9ccef-edd5-4fd0-ae1b-2bb6031e1e03",
+          "name": "audio detail",
+          "request": {
+            "name": "audio detail",
+            "description": {
+              "content": "\nGet the details of a specified audio track.\n\nBy using this endpoint, you can obtain info about audio files such as\n`id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `peaks` and `unstable__sensitivity`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ":identifier",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "55d34c8b-047f-431c-aeb6-334aa0a8c95f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"8624ba61-57f1-4f98-8a85-ece206c319cf\",\n  \"title\": \"Wish You Were Here\",\n  \"indexed_on\": \"2022-12-06T06:54:25Z\",\n  \"foreign_landing_url\": \"https://www.jamendo.com/track/1214935\",\n  \"url\": \"https://mp3d.jamendo.com/download/track/1214935/mp32\",\n  \"creator\": \"The.madpix.project\",\n  \"creator_url\": \"https://www.jamendo.com/artist/441585/the.madpix.project\",\n  \"license\": \"by-nc-sa\",\n  \"license_version\": \"3.0\",\n  \"license_url\": \"https://creativecommons.org/licenses/by-nc-sa/3.0/\",\n  \"provider\": \"jamendo\",\n  \"source\": \"jamendo\",\n  \"category\": \"music\",\n  \"genres\": [\n    \"dance\",\n    \"electronic\",\n    \"house\"\n  ],\n  \"filesize\": 7139840,\n  \"filetype\": \"mp3\",\n  \"tags\": [\n    {\n      \"accuracy\": null,\n      \"name\": \"vocal\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"female\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"speed_medium\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"guitar\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"strings\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"energetic\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"acoustic\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"vocal\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"voice\",\n      \"unstable__provider\": \"jamendo\"\n    },\n    {\n      \"accuracy\": null,\n      \"name\": \"funkyhouse\",\n      \"unstable__provider\": \"jamendo\"\n    }\n  ],\n  \"alt_files\": null,\n  \"attribution\": \"\\\"Wish You Were Here\\\" by The.madpix.project is licensed under CC BY-NC-SA 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/.\",\n  \"fields_matched\": [],\n  \"mature\": false,\n  \"audio_set\": {\n    \"title\": \"Wish You Were Here\",\n    \"foreign_landing_url\": \"https://www.jamendo.com/album/145774/wish-you-were-here\",\n    \"creator\": \"The.madpix.project\",\n    \"creator_url\": \"https://www.jamendo.com/artist/441585/the.madpix.project\",\n    \"url\": \"https://usercontent.jamendo.com?type=album&id=145774&width=200\",\n    \"filesize\": null,\n    \"filetype\": null\n  },\n  \"duration\": 270000,\n  \"bit_rate\": 128000,\n  \"sample_rate\": 44100,\n  \"thumbnail\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/thumb/\",\n  \"detail_url\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/\",\n  \"related_url\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/\",\n  \"waveform\": \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/\",\n  \"unstable__sensitivity\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4ac3318-6217-4b53-9750-54118a7304fe",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Incorrect authentication credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43400926-98f7-42f7-9df7-55b0217d2457",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd278039-99f3-4ba8-9446-2005e2a0a16d",
+          "name": "audio related",
+          "request": {
+            "name": "audio related",
+            "description": {
+              "content": "\nGet related audio files for a specified audio track.\n\nBy using this endpoint, you can get the details of related audio such as\n`id`, `title`, `indexed_on`, `foreign_landing_url`, `url`, `creator`, `creator_url`, `license`, `license_version`, `license_url`, `provider`, `source`, `category`, `genres`, `filesize`, `filetype`, `tags`, `alt_files`, `attribution`, `fields_matched`, `mature`, `audio_set`, `duration`, `bit_rate`, `sample_rate`, `thumbnail`, `detail_url`, `related_url`, `waveform`, `peaks` and `unstable__sensitivity`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ":identifier",
+                "related",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6b8bcbda-ad74-4633-9143-a5c9979cf88e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "related",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_count\": 10000,\n  \"page_count\": 20,\n  \"page_size\": 20,\n  \"page\": 1,\n  \"results\": [\n    {\n      \"title\": \"File:Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg\",\n      \"id\": \"36537842-b067-4ca0-ad67-e00ff2e06b2e\",\n      \"creator\": \"Wolfgang Amadeus Mozart\",\n      \"creator_url\": \"https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart\",\n      \"url\": \"https://upload.wikimedia.org/wikipedia/commons/2/24/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg\",\n      \"provider\": \"wikimedia\",\n      \"source\": \"wikimedia\",\n      \"license\": \"by-sa\",\n      \"license_version\": \"2.0\",\n      \"license_url\": \"https://creativecommons.org/licenses/by-sa/2.0/\",\n      \"foreign_landing_url\": \"https://commons.wikimedia.org/w/index.php?curid=3536953\",\n      \"detail_url\": \"https://api.openverse.org/v1/audio/36537842-b067-4ca0-ad67-e00ff2e06b2e\",\n      \"related_url\": \"https://api.openverse.org/v1/recommendations/audio/36537842-b067-4ca0-ad67-e00ff2e06b2e\",\n      \"fields_matched\": [\n        \"description\",\n        \"title\"\n      ],\n      \"tags\": [\n        {\n          \"name\": \"exam\"\n        },\n        {\n          \"name\": \"tactics\"\n        }\n      ]\n    }\n  ],\n  \"warnings\": [\n    {\n      \"code\": \"partially invalid request parameter\",\n      \"message\": \"Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1ecbbd7-e45e-4035-8d69-d431d86892cf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "related",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Incorrect authentication credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de4937fb-176d-4606-bc75-a0a5f1fa9b76",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "related",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"An internal server error occurred.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "020dc66b-4038-4db4-bb31-f065b32e3a05",
+          "name": "audio report",
+          "request": {
+            "name": "audio report",
+            "description": {
+              "content": "Report an issue about a specified audio track to Openverse.\n\nBy using this endpoint, you can report an audio track if it infringes\ncopyright, contains mature or sensitive content or some other reason.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ":identifier",
+                "report",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identifier",
+                  "value": "<uuid>",
+                  "description": "(Required) Our unique identifier for an open-licensed work."
+                },
+                {
+                  "disabled": false,
+                  "key": "reason",
+                  "value": "<string>",
+                  "description": "(Required) The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other"
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>",
+                  "description": "The explanation on why media is being reported."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "14d75855-62c7-4a3f-8583-0f9798c83bf1",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Our unique identifier for an open-licensed work.",
+                        "type": "text/plain"
+                      },
+                      "key": "identifier",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+                        "type": "text/plain"
+                      },
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The explanation on why media is being reported.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"8624ba61-57f1-4f98-8a85-ece206c319cf\",\n  \"reason\": \"mature\",\n  \"description\": \"This audio contains sensitive content\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "058e27a3-b92e-4b97-8f0a-39994af34c0d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Our unique identifier for an open-licensed work.",
+                        "type": "text/plain"
+                      },
+                      "key": "identifier",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+                        "type": "text/plain"
+                      },
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The explanation on why media is being reported.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": {\n    \"<request parameter>\": \"<error details>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b595b408-00c1-43cf-9c7c-06a4de8b9144",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Our unique identifier for an open-licensed work.",
+                        "type": "text/plain"
+                      },
+                      "key": "identifier",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+                        "type": "text/plain"
+                      },
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The explanation on why media is being reported.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Incorrect authentication credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4685a43-1f9f-411c-b9c4-05b3dadd4a6d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Our unique identifier for an open-licensed work.",
+                        "type": "text/plain"
+                      },
+                      "key": "identifier",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The reason to report media to Openverse.\n\n* `mature` - mature\n* `dmca` - dmca\n* `other` - other",
+                        "type": "text/plain"
+                      },
+                      "key": "reason",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The explanation on why media is being reported.",
+                        "type": "text/plain"
+                      },
+                      "key": "description",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c72ab68c-b4b2-43c2-aac2-a1d29c5aefff",
+          "name": "audio thumb",
+          "request": {
+            "name": "audio thumb",
+            "description": {
+              "content": "Retrieve the scaled down and compressed thumbnail of the artwork of an\naudio track or its audio set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ":identifier",
+                "thumb",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "full_size",
+                  "value": "false",
+                  "description": "whether to render the actual image and not a thumbnail version"
+                },
+                {
+                  "disabled": false,
+                  "key": "compressed",
+                  "value": "<boolean>",
+                  "description": "whether to compress the output image to reduce file size,defaults to opposite of `full_size`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "21a6a611-190a-4e9d-a41e-7cafd052cd84",
+              "name": "Thumbnail image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7cca447-958e-4c01-8f5d-fabddef08248",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34844dd6-b521-4f30-88b8-af628d90dcb2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6487c554-e3ad-45c2-9937-7f3575829b74",
+          "name": "audio waveform",
+          "request": {
+            "name": "audio waveform",
+            "description": {
+              "content": "Get the waveform peaks for an audio track.\n\nThe peaks are provided as a list of numbers, each of these numbers being\na fraction between 0 and 1. The list contains approximately 1000 numbers,\nalthough it can be slightly higher or lower, depending on the track's length.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                ":identifier",
+                "waveform",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f8fef2db-186f-41bd-a9a5-b64073ebdc12",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "waveform",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"len\": 1083,\n  \"points\": [\n    0.61275,\n    0.19593,\n    0.74023,\n    0.00089,\n    0.00043,\n    0.00049\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad696f52-0d0a-445c-a6ac-592329871736",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "waveform",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Incorrect authentication credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd7dceff-fc1f-424d-afee-d671702909f9",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    ":identifier",
+                    "waveform",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"An internal server error occurred.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "001929ba-f9d8-4f60-9ed7-73d1468d5763",
+          "name": "audio stats",
+          "request": {
+            "name": "audio stats",
+            "description": {
+              "content": "\nGet a list of all content sources and their respective number of\naudio files in the Openverse catalog.\n\nBy using this endpoint, you can obtain info about content sources such\nas `source_name`, `display_name`, `source_url`, `logo_url` and `media_count`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "audio",
+                "stats",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "598f0e77-7b84-4d04-af39-e33be03de596",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"source_name\": \"freesound\",\n    \"display_name\": \"Freesound\",\n    \"source_url\": \"https://freesound.org/\",\n    \"logo_url\": null,\n    \"media_count\": 827\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1ab5925-ee70-4b26-8637-608cdc2411d2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "audio",
+                    "stats",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Incorrect authentication credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "260c9d80-f1ff-49d6-b20d-d0cb2e701864",
+          "name": "images thumb",
+          "request": {
+            "name": "images thumb",
+            "description": {
+              "content": "Retrieve the scaled down and compressed thumbnail of the image.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "images",
+                ":identifier",
+                "thumb",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "full_size",
+                  "value": "false",
+                  "description": "whether to render the actual image and not a thumbnail version"
+                },
+                {
+                  "disabled": false,
+                  "key": "compressed",
+                  "value": "<boolean>",
+                  "description": "whether to compress the output image to reduce file size,defaults to opposite of `full_size`"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "identifier",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a8239bfe-06bf-494a-978d-5cc2f8098dca",
+              "name": "Thumbnail image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2d01aa09-6915-404c-804b-dafa8d4bb9a3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d3c0644-627a-48ab-be12-f6993e048268",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "images",
+                    ":identifier",
+                    "thumb",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "full_size",
+                      "value": "false"
+                    },
+                    {
+                      "key": "compressed",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "identifier",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b63f9394-9ff6-4e1f-afd2-b7c9bc6b6195",
+    "name": "Openverse audio API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nOpenverse is a search engine for openly-licensed media. The Openverse\nAPI is a system that allows programmatic access to public domain digital\nmedia. It is our ambition to index and catalog billions of\nopenly-licensed works, including articles, songs, videos, photographs,\npaintings, and more.\n\nUsing this API, developers will be able to access the digital commons in\ntheir own applications. You can see some examples of\n[apps built with Openverse](https://docs.openverse.org/api/reference/made_with_ov.html)\nin our docs.\n\n\nContact Support:\n Name: Openverse\n Email: openverse@wordpress.org",
+      "type": "text/plain"
+    }
+  }
+}
