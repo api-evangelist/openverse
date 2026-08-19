@@ -203,7 +203,7 @@ maintainers:
 created: "2026-06-13"
 modified: "2026-06-13"
 url: https://raw.githubusercontent.com/api-evangelist/openverse/refs/heads/main/apis.yml
-specificationVersion: "0.19"
+specificationVersion: '0.23'
 common:
   - type: License
     name: MIT
