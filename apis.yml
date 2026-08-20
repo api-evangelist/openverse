@@ -20,6 +20,15 @@ accessModel:
   method: derived
 image: https://openverse.org/openverse-logo.svg
 tags:
+  - Image
+  - Audio
+  - Creative Commons
+  - Open Media
+  - Search
+  - Open Data
+  - Cultural Heritage
+  - Museums
+tags_raw:
   - Images
   - Audio
   - Creative Commons
@@ -36,6 +45,8 @@ apis:
   humanURL: https://api.openverse.org/v1/
   baseURL: https://api.openverse.org/v1
   tags:
+  - Audio
+  tags_raw:
   - audio
   properties:
   - type: OpenAPI
@@ -151,6 +162,8 @@ apis:
   humanURL: https://api.openverse.org/v1/
   baseURL: https://api.openverse.org/v1
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -177,6 +190,8 @@ apis:
   humanURL: https://api.openverse.org/v1/
   baseURL: https://api.openverse.org/v1
   tags:
+  - Image
+  tags_raw:
   - images
   properties:
   - type: OpenAPI
