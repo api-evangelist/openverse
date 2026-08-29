@@ -234,6 +234,9 @@ modified: "2026-06-13"
 url: https://raw.githubusercontent.com/api-evangelist/openverse/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 common:
+  - type: CapabilityMap
+    url: capabilities/openverse-capability-edges.yml
+    name: Openverse Business Capability Map
   - type: IssueTracker
     url: https://github.com/WordPress/openverse/issues
   - type: Releases
