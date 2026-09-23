@@ -1,13 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Openverse audio images API
+  title: Openverse Images API
   version: 909aa41ddf2115a69a447198b3f49121481e0c6b (v1)
   x-logo:
     url: https://raw.githubusercontent.com/WordPress/openverse/HEAD/documentation/meta/brand/logo.svg
     backgroundColor: '#fafafa'
-  description: '
-
-    Openverse is a search engine for openly-licensed media. The Openverse
+  description: 'Openverse is a search engine for openly-licensed media. The Openverse
 
     API is a system that allows programmatic access to public domain digital
 
@@ -22,11 +20,9 @@ info:
 
     their own applications. You can see some examples of
 
-    [apps built with Openverse](https://docs.openverse.org/api/reference/made_with_ov.html)
+    apps built with Openverse
 
-    in our docs.
-
-    '
+    in our docs.'
   termsOfService: https://docs.openverse.org/terms_of_service.html
   contact:
     name: Openverse
@@ -35,15 +31,13 @@ info:
     name: MIT License
     url: https://github.com/WordPress/openverse/blob/main/LICENSE
 tags:
-- name: images
+- name: Images
   description: These are endpoints pertaining to images.
 paths:
   /v1/images/:
     get:
       operationId: images_search
-      description: '
-
-        Return images that match the query.
+      description: 'Return images that match the query.
 
 
         This endpoint allows you to search within specific fields, or to retrieve
@@ -105,9 +99,7 @@ paths:
 
         Collection results are sorted by the time they were added to Openverse, with the most recent
 
-        additions appearing first. The filters such as `license` are not available for collections.
-
-        '
+        additions appearing first. The filters such as `license` are not available for collections.'
       externalDocs:
         description: Openverse Syntax Guide
         url: https://openverse.org/search-help
@@ -480,7 +472,7 @@ paths:
           minLength: 1
         description: 'A comma separated list of image sizes; available image sizes include: `large`, `medium`, and `small`.'
       tags:
-      - images
+      - Images
       security:
       - Openverse API Token: []
       - {}
@@ -627,12 +619,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Example 0: Search for images using single query parameter\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=test\"\n\n\n# Example 1: Search for images using multiple query parameters\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=test&license=pdm,by&categories=illustration&page_size=1&page=1\"\n\n\n# Example 2: Search for images that are an exact match of Claude Monet\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=%22Claude%20Monet%22\"\n\n\n# Example 3: Search for images related to both dog and cat\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=dog+cat\"\n\n\n# Example 4: Search for images related to dog or cat, but not necessarily both\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=dog|cat\"\n\n\n# Example 5: Search for images related to dog but won't include results related to 'pug'\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=dog -pug\"\n\n\n# Example 6: Search for images matching anything with the prefix ‘net’\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=net*\"\n\n\n# Example 7: Search for images matching dogs that are either corgis or labrador\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=dogs + (corgis | labrador)\"\n\n\n# Example 8: Search for images matching strings close to the term theaterwith a difference of one character\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/?q=theatre~1\"\n"
+      summary: Images search
+      x-summary-source: derived
   /v1/images/{identifier}/:
     get:
       operationId: images_detail
-      description: '
-
-        Get the details of a specified image.
+      description: 'Get the details of a specified image.
 
 
         By using this endpoint, you can obtain info about images such as
@@ -646,7 +638,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - images
+      - Images
       security:
       - Openverse API Token: []
       - {}
@@ -781,12 +773,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get the details of image ID 4bc43a04-ef46-4544-a0c1-63c63f56e276\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/\"\n"
+      summary: Images detail
+      x-summary-source: derived
   /v1/images/{identifier}/related/:
     get:
       operationId: images_related
-      description: '
-
-        Get related images for a specified image.
+      description: 'Get related images for a specified image.
 
 
         By using this endpoint, you can get the details of related images such as
@@ -800,7 +792,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - images
+      - Images
       security:
       - Openverse API Token: []
       - {}
@@ -863,6 +855,8 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get related images for image ID 4bc43a04-ef46-4544-a0c1-63c63f56e276\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/related/\"\n"
+      summary: Images related
+      x-summary-source: derived
   /v1/images/{identifier}/report/:
     post:
       operationId: images_report
@@ -880,7 +874,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - images
+      - Images
       requestBody:
         content:
           application/json:
@@ -945,12 +939,14 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Report an issue about image ID 4bc43a04-ef46-4544-a0c1-63c63f56e276\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  -d '{\"reason\": \"mature\", \"description\": \"Image contains sensitive content\"}' \\\n  \"https://api.openverse.org/v1/images/4bc43a04-ef46-4544-a0c1-63c63f56e276/report/\"\n"
+      summary: Images report
+      x-summary-source: derived
   /v1/images/oembed/:
     get:
       operationId: images_oembed
       description: 'Retrieve the structured data for a specified image URL as per the
 
-        [oEmbed spec](https://oembed.com/).
+        oEmbed spec.
 
 
         This info can be used to embed the image on the consumer''s website. Only
@@ -966,7 +962,7 @@ paths:
         description: The link to an image present in Openverse.
         required: true
       tags:
-      - images
+      - Images
       security:
       - Openverse API Token: []
       - {}
@@ -1025,12 +1021,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Retrieve embedded content from an image's URL\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/oembed/?url=https://wordpress.org/openverse/photos/4bc43a04-ef46-4544-a0c1-63c63f56e276\"\n"
+      summary: Images oembed
+      x-summary-source: derived
   /v1/images/stats/:
     get:
       operationId: images_stats
-      description: '
-
-        Get a list of all content sources and their respective number of
+      description: 'Get a list of all content sources and their respective number of
 
         images in the Openverse catalog.
 
@@ -1039,7 +1035,7 @@ paths:
 
         as `source_name`, `display_name`, `source_url`, `logo_url` and `media_count`.'
       tags:
-      - images
+      - Images
       security:
       - Openverse API Token: []
       - {}
@@ -1073,19 +1069,181 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get the statistics for image sources\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/images/stats/\"\n"
+      summary: Images stats
+      x-summary-source: derived
 components:
   schemas:
-    ReasonEnum:
+    Tag:
+      type: object
+      description: This output serializer serializes a singular tag.
+      properties:
+        name:
+          type: string
+          description: The name of a detailed tag.
+        accuracy:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
+          type:
+          - string
+          - 'null'
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
+      required:
+      - name
+      - unstable__provider
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        detail:
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
+    Oembed:
+      type: object
+      description: 'The embedded content from a specified image URL.
+
+
+        This is essentially an ``ImageSerializer`` with some changes to match the oEmbed
+
+        spec: https://oembed.com.'
+      properties:
+        version:
+          allOf:
+          - $ref: '#/components/schemas/VersionEnum'
+          readOnly: true
+          description: The oEmbed version number, always set to 1.0.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          readOnly: true
+          description: The resource type, always set to 'photo' for images.
+        width:
+          type: integer
+          readOnly: true
+          description: The width of the image in pixels.
+        height:
+          type: integer
+          readOnly: true
+          description: The height of the image in pixels.
+        title:
+          type:
+          - string
+          - 'null'
+          description: The name of the media.
+        author_name:
+          type: string
+          description: The name of the media creator.
+        author_url:
+          type: string
+          format: uri
+          description: A direct link to the media creator.
+        license_url:
+          type:
+          - string
+          - 'null'
+          description: A direct link to the license deed or legal terms.
+          readOnly: true
+      required:
+      - author_name
+      - author_url
+      - height
+      - license_url
+      - type
+      - version
+      - width
+    ImageReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    TypeEnum:
       enum:
-      - mature
-      - dmca
-      - other
+      - photo
       type: string
-      description: '* `mature` - mature
-
-        * `dmca` - dmca
-
-        * `other` - other'
+    VersionEnum:
+      enum:
+      - '1.0'
+      type: string
     Image:
       type: object
       description: A single image. Used in search results.
@@ -1094,29 +1252,34 @@ components:
           type: string
           description: Our unique identifier for an open-licensed work.
         title:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The name of the media.
         indexed_on:
           type: string
           format: date-time
           description: The timestamp of when the media was indexed by Openverse.
         foreign_landing_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The landing page of the work.
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The actual URL to the media file.
           maxLength: 1000
         creator:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The name of the media creator.
         creator_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A direct link to the media creator.
           maxLength: 2000
         license:
@@ -1124,71 +1287,83 @@ components:
           description: The name of license for the media.
           maxLength: 50
         license_version:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The version of the media license.
           maxLength: 25
         license_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A direct link to the license deed or legal terms.
           readOnly: true
         provider:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The content provider, e.g. Flickr, Jamendo...
           maxLength: 80
         source:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: 'The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.'
           maxLength: 80
         category:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The top-level classification of this media file.
           maxLength: 80
         filesize:
-          type: integer
+          type:
+          - integer
+          - 'null'
           maximum: 2147483647
           minimum: -2147483648
-          nullable: true
           description: Number in bytes, e.g. 1024.
         filetype:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The type of the file, related to the file extension.
           maxLength: 80
         tags:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/Tag'
-          nullable: true
           description: Tags with detailed metadata, such as accuracy.
         attribution:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Legally valid attribution for the media item in plain-text English.
           readOnly: true
         fields_matched:
-          type: array
+          type:
+          - array
+          - 'null'
           items: {}
-          nullable: true
           description: List the fields that matched the query for this result.
         mature:
           type: boolean
           description: Whether the media item is marked as mature
         height:
-          type: integer
+          type:
+          - integer
+          - 'null'
           maximum: 2147483647
           minimum: -2147483648
-          nullable: true
           description: The height of the image in pixels. Not always available.
         width:
-          type: integer
+          type:
+          - integer
+          - 'null'
           maximum: 2147483647
           minimum: -2147483648
-          nullable: true
           description: The width of the image in pixels. Not always available.
         thumbnail:
           type: string
@@ -1217,69 +1392,6 @@ components:
       - related_url
       - tags
       - thumbnail
-    Tag:
-      type: object
-      description: This output serializer serializes a singular tag.
-      properties:
-        name:
-          type: string
-          description: The name of a detailed tag.
-        accuracy:
-          type: number
-          format: double
-          nullable: true
-          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
-        unstable__provider:
-          type: string
-          nullable: true
-          title: provider
-          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
-      required:
-      - name
-      - unstable__provider
-    Source:
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The source of the media, e.g. flickr
-        display_name:
-          type: string
-          description: The name of content source, e.g. Flickr
-        source_url:
-          type: string
-          format: uri
-          description: The URL of the source, e.g. https://www.flickr.com
-        logo_url:
-          type: string
-          nullable: true
-          readOnly: true
-          description: The URL to a logo for the source.
-          deprecated: true
-        media_count:
-          type: integer
-          readOnly: true
-          description: The number of media items indexed from the source.
-      required:
-      - display_name
-      - logo_url
-      - media_count
-      - source_name
-      - source_url
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    AuthenticationFailed:
-      title: AuthenticationFailed
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
     PaginatedImageList:
       type: object
       properties:
@@ -1317,110 +1429,19 @@ components:
       - page
       - results
       - result_count
-    ValidationError:
-      title: ValidationError
-      type: object
-      properties:
-        detail:
-          oneOf:
-          - type: string
-            description: A description of what went wrong.
-          - type: object
-            additionalProperties: true
-    ImageReportRequest:
-      type: object
-      properties:
-        identifier:
-          type: string
-          format: uuid
-          description: Our unique identifier for an open-licensed work.
-        reason:
-          allOf:
-          - $ref: '#/components/schemas/ReasonEnum'
-          description: 'The reason to report media to Openverse.
-
-
-            * `mature` - mature
-
-            * `dmca` - dmca
-
-            * `other` - other'
-        description:
-          type: string
-          nullable: true
-          description: The explanation on why media is being reported.
-          maxLength: 500
-      required:
-      - identifier
-      - reason
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    TypeEnum:
+    ReasonEnum:
       enum:
-      - photo
+      - mature
+      - dmca
+      - other
       type: string
-    VersionEnum:
-      enum:
-      - '1.0'
-      type: string
-    Oembed:
-      type: object
-      description: 'The embedded content from a specified image URL.
+      description: '* `mature` - mature
 
+        * `dmca` - dmca
 
-        This is essentially an ``ImageSerializer`` with some changes to match the oEmbed
-
-        spec: https://oembed.com.'
-      properties:
-        version:
-          allOf:
-          - $ref: '#/components/schemas/VersionEnum'
-          readOnly: true
-          description: The oEmbed version number, always set to 1.0.
-        type:
-          allOf:
-          - $ref: '#/components/schemas/TypeEnum'
-          readOnly: true
-          description: The resource type, always set to 'photo' for images.
-        width:
-          type: integer
-          readOnly: true
-          description: The width of the image in pixels.
-        height:
-          type: integer
-          readOnly: true
-          description: The height of the image in pixels.
-        title:
-          type: string
-          nullable: true
-          description: The name of the media.
-        author_name:
-          type: string
-          description: The name of the media creator.
-        author_url:
-          type: string
-          format: uri
-          description: A direct link to the media creator.
-        license_url:
-          type: string
-          nullable: true
-          description: A direct link to the license deed or legal terms.
-          readOnly: true
-      required:
-      - author_name
-      - author_url
-      - height
-      - license_url
-      - type
-      - version
-      - width
+        * `other` - other'
   securitySchemes:
-    Openverse API Token:
+    Openverse_API_Token:
       type: http
       scheme: bearer
 externalDocs:

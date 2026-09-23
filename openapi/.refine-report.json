@@ -1,9 +1,7 @@
 {
   "provider": "openverse",
   "sources": [
-    "openverse-audio-api-openapi.yml",
-    "openverse-auth-api-openapi.yml",
-    "openverse-images-api-openapi.yml"
+    "_original/openapi.json"
   ],
   "outputs": [
     "openverse-audio-api-openapi.yml",
@@ -13,6 +11,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. Openverse API Token)",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "openverse-audio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "openverse-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "openverse-images-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

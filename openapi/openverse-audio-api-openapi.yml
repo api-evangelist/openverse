@@ -1,13 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Openverse audio API
+  title: Openverse Audio API
   version: 909aa41ddf2115a69a447198b3f49121481e0c6b (v1)
   x-logo:
     url: https://raw.githubusercontent.com/WordPress/openverse/HEAD/documentation/meta/brand/logo.svg
     backgroundColor: '#fafafa'
-  description: '
-
-    Openverse is a search engine for openly-licensed media. The Openverse
+  description: 'Openverse is a search engine for openly-licensed media. The Openverse
 
     API is a system that allows programmatic access to public domain digital
 
@@ -22,11 +20,9 @@ info:
 
     their own applications. You can see some examples of
 
-    [apps built with Openverse](https://docs.openverse.org/api/reference/made_with_ov.html)
+    apps built with Openverse
 
-    in our docs.
-
-    '
+    in our docs.'
   termsOfService: https://docs.openverse.org/terms_of_service.html
   contact:
     name: Openverse
@@ -35,15 +31,13 @@ info:
     name: MIT License
     url: https://github.com/WordPress/openverse/blob/main/LICENSE
 tags:
-- name: audio
+- name: Audio
   description: These are endpoints pertaining to audio files.
 paths:
   /v1/audio/:
     get:
       operationId: audio_search
-      description: '
-
-        Return audio files that match the query.
+      description: 'Return audio files that match the query.
 
 
         This endpoint allows you to search within specific fields, or to retrieve
@@ -105,9 +99,7 @@ paths:
 
         Collection results are sorted by the time they were added to Openverse, with the most recent
 
-        additions appearing first. The filters such as `license` are not available for collections.
-
-        '
+        additions appearing first. The filters such as `license` are not available for collections.'
       externalDocs:
         description: Openverse Syntax Guide
         url: https://openverse.org/search-help
@@ -480,7 +472,7 @@ paths:
           default: false
         description: Whether to include the waveform peaks or not
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -600,12 +592,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Example 0: Search for audio using single query parameter\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=test\"\n\n\n# Example 1: Search for audio using multiple query parameters\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=test&license=pdm,by&categories=illustration&page_size=1&page=1\"\n\n\n# Example 2: Search for audio that is an exact match of Giacomo Puccini\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=%22Giacomo%20Puccini%22\"\n\n\n# Example 3: Search for audio related to both dog and cat\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog+cat\"\n\n\n# Example 4: Search for audio related to dog or cat, but not necessarily both\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog|cat\"\n\n\n# Example 5: Search for audio related to dog but won't include results related to 'pug'\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dog -pug\"\n\n\n# Example 6: Search for audio matching anything with the prefix 'net'\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=net*\"\n\n\n# Example 7: Search for audio matching dogs that are either corgis or labrador\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=dogs + (corgis | labrador)\"\n\n\n# Example 8: Search for audio matching strings close to the term theater with a difference of one character\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/?q=theatre~1\"\n"
+      summary: Audio search
+      x-summary-source: derived
   /v1/audio/{identifier}/:
     get:
       operationId: audio_detail
-      description: '
-
-        Get the details of a specified audio track.
+      description: 'Get the details of a specified audio track.
 
 
         By using this endpoint, you can obtain info about audio files such as
@@ -619,7 +611,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -727,12 +719,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get the details of audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/\"\n"
+      summary: Audio detail
+      x-summary-source: derived
   /v1/audio/{identifier}/related/:
     get:
       operationId: audio_related
-      description: '
-
-        Get related audio files for a specified audio track.
+      description: 'Get related audio files for a specified audio track.
 
 
         By using this endpoint, you can get the details of related audio such as
@@ -746,7 +738,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -811,6 +803,8 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get related audio files for audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/related/\"\n"
+      summary: Audio related
+      x-summary-source: derived
   /v1/audio/{identifier}/report/:
     post:
       operationId: audio_report
@@ -828,7 +822,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - audio
+      - Audio
       requestBody:
         content:
           application/json:
@@ -893,6 +887,8 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Report an issue about audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -X POST \\\n  -H \"Content-Type: application/json\" \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  -d '{\"reason\": \"mature\", \"description\": \"This audio contains sensitive content\"}' \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/report/\"\n"
+      summary: Audio report
+      x-summary-source: derived
   /v1/audio/{identifier}/thumb/:
     get:
       operationId: audio_thumb
@@ -909,18 +905,20 @@ paths:
       - in: query
         name: full_size
         schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           default: false
         description: whether to render the actual image and not a thumbnail version
       - in: query
         name: compressed
         schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         description: whether to compress the output image to reduce file size,defaults to opposite of `full_size`
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -939,6 +937,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthenticationFailed'
           description: ''
+      summary: Audio thumb
+      x-summary-source: derived
   /v1/audio/{identifier}/waveform/:
     get:
       operationId: audio_waveform
@@ -958,7 +958,7 @@ paths:
           format: uuid
         required: true
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -1004,12 +1004,12 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get the waveform of audio ID 8624ba61-57f1-4f98-8a85-ece206c319cf\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  -H \"Content-Type: application/json\" \\\n  \"https://api.openverse.org/v1/audio/8624ba61-57f1-4f98-8a85-ece206c319cf/waveform/\"\n"
+      summary: Audio waveform
+      x-summary-source: derived
   /v1/audio/stats/:
     get:
       operationId: audio_stats
-      description: '
-
-        Get a list of all content sources and their respective number of
+      description: 'Get a list of all content sources and their respective number of
 
         audio files in the Openverse catalog.
 
@@ -1018,7 +1018,7 @@ paths:
 
         as `source_name`, `display_name`, `source_url`, `logo_url` and `media_count`.'
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -1052,6 +1052,8 @@ paths:
       x-codeSamples:
       - lang: cURL
         source: "\n# Get the statistics for audio sources\ncurl \\\n  -H \"Authorization: Bearer <Openverse API token>\" \\\n  \"https://api.openverse.org/v1/audio/stats/\"\n"
+      summary: Audio stats
+      x-summary-source: derived
   /v1/images/{identifier}/thumb/:
     get:
       operationId: images_thumb
@@ -1066,18 +1068,20 @@ paths:
       - in: query
         name: full_size
         schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
           default: false
         description: whether to render the actual image and not a thumbnail version
       - in: query
         name: compressed
         schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         description: whether to compress the output image to reduce file size,defaults to opposite of `full_size`
       tags:
-      - audio
+      - Audio
       security:
       - Openverse API Token: []
       - {}
@@ -1096,81 +1100,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthenticationFailed'
           description: ''
+      summary: Images thumb
+      x-summary-source: derived
 components:
   schemas:
-    AudioWaveform:
-      type: object
-      properties:
-        len:
-          type: integer
-          readOnly: true
-        points:
-          type: array
-          items:
-            type: number
-            format: double
-            maximum: 1
-            minimum: 0
-      required:
-      - len
-      - points
-    ReasonEnum:
-      enum:
-      - mature
-      - dmca
-      - other
-      type: string
-      description: '* `mature` - mature
-
-        * `dmca` - dmca
-
-        * `other` - other'
-    AudioReportRequest:
-      type: object
-      properties:
-        identifier:
-          type: string
-          format: uuid
-          description: Our unique identifier for an open-licensed work.
-        reason:
-          allOf:
-          - $ref: '#/components/schemas/ReasonEnum'
-          description: 'The reason to report media to Openverse.
-
-
-            * `mature` - mature
-
-            * `dmca` - dmca
-
-            * `other` - other'
-        description:
-          type: string
-          nullable: true
-          description: The explanation on why media is being reported.
-          maxLength: 500
-      required:
-      - identifier
-      - reason
-    Tag:
-      type: object
-      description: This output serializer serializes a singular tag.
-      properties:
-        name:
-          type: string
-          description: The name of a detailed tag.
-        accuracy:
-          type: number
-          format: double
-          nullable: true
-          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
-        unstable__provider:
-          type: string
-          nullable: true
-          title: provider
-          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
-      required:
-      - name
-      - unstable__provider
     AudioAltFile:
       type: object
       description: 'A set of alternative files for a single audio object,
@@ -1199,232 +1132,28 @@ components:
       required:
       - filetype
       - url
-    Audio:
+    Tag:
       type: object
-      description: A single audio file. Used in search results.
+      description: This output serializer serializes a singular tag.
       properties:
-        id:
+        name:
           type: string
-          description: Our unique identifier for an open-licensed work.
-        title:
-          type: string
-          nullable: true
-          description: The name of the media.
-        indexed_on:
-          type: string
-          format: date-time
-          description: The timestamp of when the media was indexed by Openverse.
-        foreign_landing_url:
-          type: string
-          nullable: true
-          description: The landing page of the work.
-        url:
-          type: string
-          nullable: true
-          description: The actual URL to the media file.
-          maxLength: 1000
-        creator:
-          type: string
-          nullable: true
-          description: The name of the media creator.
-        creator_url:
-          type: string
-          nullable: true
-          description: A direct link to the media creator.
-          maxLength: 2000
-        license:
-          type: string
-          description: The name of license for the media.
-          maxLength: 50
-        license_version:
-          type: string
-          nullable: true
-          description: The version of the media license.
-          maxLength: 25
-        license_url:
-          type: string
-          nullable: true
-          description: A direct link to the license deed or legal terms.
-          readOnly: true
-        provider:
-          type: string
-          nullable: true
-          description: The content provider, e.g. Flickr, Jamendo...
-          maxLength: 80
-        source:
-          type: string
-          nullable: true
-          description: 'The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.'
-          maxLength: 80
-        category:
-          type: string
-          nullable: true
-          description: The top-level classification of this media file.
-          maxLength: 80
-        genres:
-          type: array
-          items:
-            type: string
-            maxLength: 80
-          nullable: true
-          description: An array of audio genres such as `rock`, `electronic` for `music` category, or `politics`, `sport`, `education` for `podcast` category
-        filesize:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          description: Number in bytes, e.g. 1024.
-        filetype:
-          type: string
-          nullable: true
-          description: The type of the file, related to the file extension.
-          maxLength: 80
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-          nullable: true
-          description: Tags with detailed metadata, such as accuracy.
-        alt_files:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudioAltFile'
-          readOnly: true
-          nullable: true
-          description: JSON describing alternative files for this audio.
-        attribution:
-          type: string
-          nullable: true
-          description: Legally valid attribution for the media item in plain-text English.
-          readOnly: true
-        fields_matched:
-          type: array
-          items: {}
-          nullable: true
-          description: List the fields that matched the query for this result.
-        mature:
-          type: boolean
-          description: Whether the media item is marked as mature
-        audio_set:
-          allOf:
-          - $ref: '#/components/schemas/AudioSet'
-          readOnly: true
-          nullable: true
-          description: Reference to set of which this track is a part.
-        duration:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          description: The time length of the audio file in milliseconds.
-        bit_rate:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          description: Number in bits per second, eg. 128000.
-        sample_rate:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          description: Number in hertz, eg. 44100.
-        thumbnail:
-          type: string
-          format: uri
-          readOnly: true
-          nullable: true
-          description: A direct link to the miniature artwork.
-        detail_url:
-          type: string
-          format: uri
-          readOnly: true
-          description: A direct link to the detail view of this audio file.
-        related_url:
-          type: string
-          format: uri
-          readOnly: true
-          description: A link to an endpoint that provides similar audio files.
-        waveform:
-          type: string
-          format: uri
-          readOnly: true
-          description: A direct link to the waveform peaks.
+          description: The name of a detailed tag.
+        accuracy:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
+          type:
+          - string
+          - 'null'
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
       required:
-      - alt_files
-      - attribution
-      - audio_set
-      - detail_url
-      - fields_matched
-      - id
-      - indexed_on
-      - license
-      - license_url
-      - mature
-      - related_url
-      - tags
-      - thumbnail
-      - waveform
-    Source:
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The source of the media, e.g. flickr
-        display_name:
-          type: string
-          description: The name of content source, e.g. Flickr
-        source_url:
-          type: string
-          format: uri
-          description: The URL of the source, e.g. https://www.flickr.com
-        logo_url:
-          type: string
-          nullable: true
-          readOnly: true
-          description: The URL to a logo for the source.
-          deprecated: true
-        media_count:
-          type: integer
-          readOnly: true
-          description: The number of media items indexed from the source.
-      required:
-      - display_name
-      - logo_url
-      - media_count
-      - source_name
-      - source_url
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    AuthenticationFailed:
-      title: AuthenticationFailed
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    ValidationError:
-      title: ValidationError
-      type: object
-      properties:
-        detail:
-          oneOf:
-          - type: string
-            description: A description of what went wrong.
-          - type: object
-            additionalProperties: true
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
+      - name
+      - unstable__provider
     PaginatedAudioList:
       type: object
       properties:
@@ -1462,45 +1191,353 @@ components:
       - page
       - results
       - result_count
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        detail:
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
     AudioSet:
       type: object
       description: An audio set, rendered as a part of the ``AudioSerializer`` output.
       properties:
         title:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The name of the media.
         foreign_landing_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The landing page of the work.
         creator:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The name of the media creator.
         creator_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A direct link to the media creator.
           maxLength: 2000
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The actual URL to the media file.
           maxLength: 1000
         filesize:
-          type: integer
+          type:
+          - integer
+          - 'null'
           maximum: 2147483647
           minimum: -2147483648
-          nullable: true
           description: Number in bytes, e.g. 1024.
         filetype:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The type of the file, related to the file extension.
           maxLength: 80
+    Audio:
+      type: object
+      description: A single audio file. Used in search results.
+      properties:
+        id:
+          type: string
+          description: Our unique identifier for an open-licensed work.
+        title:
+          type:
+          - string
+          - 'null'
+          description: The name of the media.
+        indexed_on:
+          type: string
+          format: date-time
+          description: The timestamp of when the media was indexed by Openverse.
+        foreign_landing_url:
+          type:
+          - string
+          - 'null'
+          description: The landing page of the work.
+        url:
+          type:
+          - string
+          - 'null'
+          description: The actual URL to the media file.
+          maxLength: 1000
+        creator:
+          type:
+          - string
+          - 'null'
+          description: The name of the media creator.
+        creator_url:
+          type:
+          - string
+          - 'null'
+          description: A direct link to the media creator.
+          maxLength: 2000
+        license:
+          type: string
+          description: The name of license for the media.
+          maxLength: 50
+        license_version:
+          type:
+          - string
+          - 'null'
+          description: The version of the media license.
+          maxLength: 25
+        license_url:
+          type:
+          - string
+          - 'null'
+          description: A direct link to the license deed or legal terms.
+          readOnly: true
+        provider:
+          type:
+          - string
+          - 'null'
+          description: The content provider, e.g. Flickr, Jamendo...
+          maxLength: 80
+        source:
+          type:
+          - string
+          - 'null'
+          description: 'The source of the data, meaning a particular dataset. Source and provider can be different. Eg: the Google Open Images dataset is source=openimages, but provider=flickr.'
+          maxLength: 80
+        category:
+          type:
+          - string
+          - 'null'
+          description: The top-level classification of this media file.
+          maxLength: 80
+        genres:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            maxLength: 80
+          description: An array of audio genres such as `rock`, `electronic` for `music` category, or `politics`, `sport`, `education` for `podcast` category
+        filesize:
+          type:
+          - integer
+          - 'null'
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Number in bytes, e.g. 1024.
+        filetype:
+          type:
+          - string
+          - 'null'
+          description: The type of the file, related to the file extension.
+          maxLength: 80
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Tag'
+          description: Tags with detailed metadata, such as accuracy.
+        alt_files:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudioAltFile'
+          readOnly: true
+          description: JSON describing alternative files for this audio.
+        attribution:
+          type:
+          - string
+          - 'null'
+          description: Legally valid attribution for the media item in plain-text English.
+          readOnly: true
+        fields_matched:
+          type:
+          - array
+          - 'null'
+          items: {}
+          description: List the fields that matched the query for this result.
+        mature:
+          type: boolean
+          description: Whether the media item is marked as mature
+        audio_set:
+          allOf:
+          - $ref: '#/components/schemas/AudioSet'
+          readOnly: true
+          description: Reference to set of which this track is a part.
+        duration:
+          type:
+          - integer
+          - 'null'
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The time length of the audio file in milliseconds.
+        bit_rate:
+          type:
+          - integer
+          - 'null'
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Number in bits per second, eg. 128000.
+        sample_rate:
+          type:
+          - integer
+          - 'null'
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Number in hertz, eg. 44100.
+        thumbnail:
+          type:
+          - string
+          - 'null'
+          format: uri
+          readOnly: true
+          description: A direct link to the miniature artwork.
+        detail_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: A direct link to the detail view of this audio file.
+        related_url:
+          type: string
+          format: uri
+          readOnly: true
+          description: A link to an endpoint that provides similar audio files.
+        waveform:
+          type: string
+          format: uri
+          readOnly: true
+          description: A direct link to the waveform peaks.
+      required:
+      - alt_files
+      - attribution
+      - audio_set
+      - detail_url
+      - fields_matched
+      - id
+      - indexed_on
+      - license
+      - license_url
+      - mature
+      - related_url
+      - tags
+      - thumbnail
+      - waveform
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    AudioWaveform:
+      type: object
+      properties:
+        len:
+          type: integer
+          readOnly: true
+        points:
+          type: array
+          items:
+            type: number
+            format: double
+            maximum: 1
+            minimum: 0
+      required:
+      - len
+      - points
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    AudioReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
+    ReasonEnum:
+      enum:
+      - mature
+      - dmca
+      - other
+      type: string
+      description: '* `mature` - mature
+
+        * `dmca` - dmca
+
+        * `other` - other'
   securitySchemes:
-    Openverse API Token:
+    Openverse_API_Token:
       type: http
       scheme: bearer
 externalDocs:
