@@ -55,7 +55,7 @@ tags_raw:
 url: https://raw.githubusercontent.com/api-evangelist/openverse/refs/heads/main/apis.yml
 apis:
 - aid: openverse:openverse-audio-api
-  name: Openverse audio API
+  name: Openverse Audio API
   description: These are endpoints pertaining to audio files.
   humanURL: https://api.openverse.org/v1/
   baseURL: https://api.openverse.org/v1
@@ -83,7 +83,7 @@ apis:
   - type: FinOps
     url: finops/finops.yml
 - aid: openverse:openverse-auth-api
-  name: Openverse auth API
+  name: Openverse Auth API
   description: 'Openverse provides free and open access to the Openverse API to
 
     anonymous and registered users. [Refer to the API documentation
@@ -199,7 +199,7 @@ apis:
   - type: FinOps
     url: finops/finops.yml
 - aid: openverse:openverse-images-api
-  name: Openverse images API
+  name: Openverse Images API
   description: These are endpoints pertaining to images.
   humanURL: https://api.openverse.org/v1/
   baseURL: https://api.openverse.org/v1

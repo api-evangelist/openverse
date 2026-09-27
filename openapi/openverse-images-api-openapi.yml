@@ -1073,6 +1073,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    ReasonEnum:
+      enum:
+      - mature
+      - dmca
+      - other
+      type: string
+      description: '* `mature` - mature
+
+        * `dmca` - dmca
+
+        * `other` - other'
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
     Tag:
       type: object
       description: This output serializer serializes a singular tag.
@@ -1095,20 +1120,6 @@ components:
       required:
       - name
       - unstable__provider
-    AuthenticationFailed:
-      title: AuthenticationFailed
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
     ValidationError:
       title: ValidationError
       type: object
@@ -1119,131 +1130,6 @@ components:
             description: A description of what went wrong.
           - type: object
             additionalProperties: true
-    Oembed:
-      type: object
-      description: 'The embedded content from a specified image URL.
-
-
-        This is essentially an ``ImageSerializer`` with some changes to match the oEmbed
-
-        spec: https://oembed.com.'
-      properties:
-        version:
-          allOf:
-          - $ref: '#/components/schemas/VersionEnum'
-          readOnly: true
-          description: The oEmbed version number, always set to 1.0.
-        type:
-          allOf:
-          - $ref: '#/components/schemas/TypeEnum'
-          readOnly: true
-          description: The resource type, always set to 'photo' for images.
-        width:
-          type: integer
-          readOnly: true
-          description: The width of the image in pixels.
-        height:
-          type: integer
-          readOnly: true
-          description: The height of the image in pixels.
-        title:
-          type:
-          - string
-          - 'null'
-          description: The name of the media.
-        author_name:
-          type: string
-          description: The name of the media creator.
-        author_url:
-          type: string
-          format: uri
-          description: A direct link to the media creator.
-        license_url:
-          type:
-          - string
-          - 'null'
-          description: A direct link to the license deed or legal terms.
-          readOnly: true
-      required:
-      - author_name
-      - author_url
-      - height
-      - license_url
-      - type
-      - version
-      - width
-    ImageReportRequest:
-      type: object
-      properties:
-        identifier:
-          type: string
-          format: uuid
-          description: Our unique identifier for an open-licensed work.
-        reason:
-          allOf:
-          - $ref: '#/components/schemas/ReasonEnum'
-          description: 'The reason to report media to Openverse.
-
-
-            * `mature` - mature
-
-            * `dmca` - dmca
-
-            * `other` - other'
-        description:
-          type:
-          - string
-          - 'null'
-          description: The explanation on why media is being reported.
-          maxLength: 500
-      required:
-      - identifier
-      - reason
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    Source:
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The source of the media, e.g. flickr
-        display_name:
-          type: string
-          description: The name of content source, e.g. Flickr
-        source_url:
-          type: string
-          format: uri
-          description: The URL of the source, e.g. https://www.flickr.com
-        logo_url:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          description: The URL to a logo for the source.
-          deprecated: true
-        media_count:
-          type: integer
-          readOnly: true
-          description: The number of media items indexed from the source.
-      required:
-      - display_name
-      - logo_url
-      - media_count
-      - source_name
-      - source_url
-    TypeEnum:
-      enum:
-      - photo
-      type: string
-    VersionEnum:
-      enum:
-      - '1.0'
-      type: string
     Image:
       type: object
       description: A single image. Used in search results.
@@ -1392,6 +1278,131 @@ components:
       - related_url
       - tags
       - thumbnail
+    TypeEnum:
+      enum:
+      - photo
+      type: string
+    VersionEnum:
+      enum:
+      - '1.0'
+      type: string
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    Oembed:
+      type: object
+      description: 'The embedded content from a specified image URL.
+
+
+        This is essentially an ``ImageSerializer`` with some changes to match the oEmbed
+
+        spec: https://oembed.com.'
+      properties:
+        version:
+          allOf:
+          - $ref: '#/components/schemas/VersionEnum'
+          readOnly: true
+          description: The oEmbed version number, always set to 1.0.
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          readOnly: true
+          description: The resource type, always set to 'photo' for images.
+        width:
+          type: integer
+          readOnly: true
+          description: The width of the image in pixels.
+        height:
+          type: integer
+          readOnly: true
+          description: The height of the image in pixels.
+        title:
+          type:
+          - string
+          - 'null'
+          description: The name of the media.
+        author_name:
+          type: string
+          description: The name of the media creator.
+        author_url:
+          type: string
+          format: uri
+          description: A direct link to the media creator.
+        license_url:
+          type:
+          - string
+          - 'null'
+          description: A direct link to the license deed or legal terms.
+          readOnly: true
+      required:
+      - author_name
+      - author_url
+      - height
+      - license_url
+      - type
+      - version
+      - width
+    ImageReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
     PaginatedImageList:
       type: object
       properties:
@@ -1429,17 +1440,6 @@ components:
       - page
       - results
       - result_count
-    ReasonEnum:
-      enum:
-      - mature
-      - dmca
-      - other
-      type: string
-      description: '* `mature` - mature
-
-        * `dmca` - dmca
-
-        * `other` - other'
   securitySchemes:
     Openverse_API_Token:
       type: http
