@@ -255,13 +255,8 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GrantTypeEnum:
-      enum:
-      - client_credentials
-      type: string
-      description: '* `client_credentials` - client_credentials'
-    NotAuthenticated:
-      title: NotAuthenticated
+    APIException:
+      title: APIException
       type: object
       properties:
         detail:
@@ -320,26 +315,6 @@ components:
       - client_id
       - client_secret
       - grant_type
-    OAuth2Application:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The unique, public identifier of your application.
-        client_secret:
-          type: string
-          description: The secret key used to authenticate your application.
-        name:
-          type: string
-          description: The name of your application or project.
-        msg:
-          type: string
-          description: Some additional information about the application.
-      required:
-      - client_id
-      - client_secret
-      - msg
-      - name
     OAuth2Registration:
       type: object
       properties:
@@ -360,13 +335,6 @@ components:
       - description
       - email
       - name
-    APIException:
-      title: APIException
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
     OAuth2Token:
       type: object
       description: 'Serializes the response for an access token.
@@ -391,6 +359,38 @@ components:
       - expires_in
       - scope
       - token_type
+    GrantTypeEnum:
+      enum:
+      - client_credentials
+      type: string
+      description: '* `client_credentials` - client_credentials'
+    OAuth2Application:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The unique, public identifier of your application.
+        client_secret:
+          type: string
+          description: The secret key used to authenticate your application.
+        name:
+          type: string
+          description: The name of your application or project.
+        msg:
+          type: string
+          description: Some additional information about the application.
+      required:
+      - client_id
+      - client_secret
+      - msg
+      - name
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
   securitySchemes:
     Openverse_API_Token:
       type: http

@@ -1111,56 +1111,6 @@ components:
         detail:
           type: string
           description: A description of what went wrong.
-    ReasonEnum:
-      enum:
-      - mature
-      - dmca
-      - other
-      type: string
-      description: '* `mature` - mature
-
-        * `dmca` - dmca
-
-        * `other` - other'
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    Tag:
-      type: object
-      description: This output serializer serializes a singular tag.
-      properties:
-        name:
-          type: string
-          description: The name of a detailed tag.
-        accuracy:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
-        unstable__provider:
-          type:
-          - string
-          - 'null'
-          title: provider
-          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
-      required:
-      - name
-      - unstable__provider
-    ValidationError:
-      title: ValidationError
-      type: object
-      properties:
-        detail:
-          oneOf:
-          - type: string
-            description: A description of what went wrong.
-          - type: object
-            additionalProperties: true
     AudioReportRequest:
       type: object
       properties:
@@ -1188,71 +1138,32 @@ components:
       required:
       - identifier
       - reason
-    AudioAltFile:
+    AudioWaveform:
       type: object
-      description: 'A set of alternative files for a single audio object,
-
-        rendered as a part of the ``AudioSerializer`` output.'
       properties:
-        url:
-          type: string
-          format: uri
-          description: URL of the alternative file.
-        bit_rate:
+        len:
           type: integer
-          minimum: 0
-          description: Bit rate of the alternative file.
-        filesize:
-          type: integer
-          minimum: 0
-          description: Size of the alternative file in bytes.
-        filetype:
-          type: string
-          description: File type of the alternative file.
-        sample_rate:
-          type: integer
-          minimum: 0
-          description: Sample rate of the alternative file.
+          readOnly: true
+        points:
+          type: array
+          items:
+            type: number
+            format: double
+            maximum: 1
+            minimum: 0
       required:
-      - filetype
-      - url
-    AuthenticationFailed:
-      title: AuthenticationFailed
+      - len
+      - points
+    ValidationError:
+      title: ValidationError
       type: object
       properties:
         detail:
-          type: string
-          description: A description of what went wrong.
-    Source:
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The source of the media, e.g. flickr
-        display_name:
-          type: string
-          description: The name of content source, e.g. Flickr
-        source_url:
-          type: string
-          format: uri
-          description: The URL of the source, e.g. https://www.flickr.com
-        logo_url:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          description: The URL to a logo for the source.
-          deprecated: true
-        media_count:
-          type: integer
-          readOnly: true
-          description: The number of media items indexed from the source.
-      required:
-      - display_name
-      - logo_url
-      - media_count
-      - source_name
-      - source_url
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
     PaginatedAudioList:
       type: object
       properties:
@@ -1290,22 +1201,6 @@ components:
       - page
       - results
       - result_count
-    AudioWaveform:
-      type: object
-      properties:
-        len:
-          type: integer
-          readOnly: true
-        points:
-          type: array
-          items:
-            type: number
-            format: double
-            maximum: 1
-            minimum: 0
-      required:
-      - len
-      - points
     AudioSet:
       type: object
       description: An audio set, rendered as a part of the ``AudioSerializer`` output.
@@ -1536,6 +1431,111 @@ components:
       - tags
       - thumbnail
       - waveform
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
+    Tag:
+      type: object
+      description: This output serializer serializes a singular tag.
+      properties:
+        name:
+          type: string
+          description: The name of a detailed tag.
+        accuracy:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
+          type:
+          - string
+          - 'null'
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
+      required:
+      - name
+      - unstable__provider
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
+          type:
+          - string
+          - 'null'
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    ReasonEnum:
+      enum:
+      - mature
+      - dmca
+      - other
+      type: string
+      description: '* `mature` - mature
+
+        * `dmca` - dmca
+
+        * `other` - other'
+    AudioAltFile:
+      type: object
+      description: 'A set of alternative files for a single audio object,
+
+        rendered as a part of the ``AudioSerializer`` output.'
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the alternative file.
+        bit_rate:
+          type: integer
+          minimum: 0
+          description: Bit rate of the alternative file.
+        filesize:
+          type: integer
+          minimum: 0
+          description: Size of the alternative file in bytes.
+        filetype:
+          type: string
+          description: File type of the alternative file.
+        sample_rate:
+          type: integer
+          minimum: 0
+          description: Sample rate of the alternative file.
+      required:
+      - filetype
+      - url
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
   securitySchemes:
     Openverse_API_Token:
       type: http
