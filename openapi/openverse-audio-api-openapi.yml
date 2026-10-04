@@ -1104,66 +1104,34 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    NotFound:
-      title: NotFound
+    AudioAltFile:
       type: object
+      description: 'A set of alternative files for a single audio object,
+
+        rendered as a part of the ``AudioSerializer`` output.'
       properties:
-        detail:
+        url:
           type: string
-          description: A description of what went wrong.
-    AudioReportRequest:
-      type: object
-      properties:
-        identifier:
-          type: string
-          format: uuid
-          description: Our unique identifier for an open-licensed work.
-        reason:
-          allOf:
-          - $ref: '#/components/schemas/ReasonEnum'
-          description: 'The reason to report media to Openverse.
-
-
-            * `mature` - mature
-
-            * `dmca` - dmca
-
-            * `other` - other'
-        description:
-          type:
-          - string
-          - 'null'
-          description: The explanation on why media is being reported.
-          maxLength: 500
-      required:
-      - identifier
-      - reason
-    AudioWaveform:
-      type: object
-      properties:
-        len:
+          format: uri
+          description: URL of the alternative file.
+        bit_rate:
           type: integer
-          readOnly: true
-        points:
-          type: array
-          items:
-            type: number
-            format: double
-            maximum: 1
-            minimum: 0
+          minimum: 0
+          description: Bit rate of the alternative file.
+        filesize:
+          type: integer
+          minimum: 0
+          description: Size of the alternative file in bytes.
+        filetype:
+          type: string
+          description: File type of the alternative file.
+        sample_rate:
+          type: integer
+          minimum: 0
+          description: Sample rate of the alternative file.
       required:
-      - len
-      - points
-    ValidationError:
-      title: ValidationError
-      type: object
-      properties:
-        detail:
-          oneOf:
-          - type: string
-            description: A description of what went wrong.
-          - type: object
-            additionalProperties: true
+      - filetype
+      - url
     PaginatedAudioList:
       type: object
       properties:
@@ -1201,50 +1169,101 @@ components:
       - page
       - results
       - result_count
-    AudioSet:
+    AudioWaveform:
       type: object
-      description: An audio set, rendered as a part of the ``AudioSerializer`` output.
       properties:
-        title:
+        len:
+          type: integer
+          readOnly: true
+        points:
+          type: array
+          items:
+            type: number
+            format: double
+            maximum: 1
+            minimum: 0
+      required:
+      - len
+      - points
+    Source:
+      type: object
+      properties:
+        source_name:
+          type: string
+          description: The source of the media, e.g. flickr
+        display_name:
+          type: string
+          description: The name of content source, e.g. Flickr
+        source_url:
+          type: string
+          format: uri
+          description: The URL of the source, e.g. https://www.flickr.com
+        logo_url:
           type:
           - string
           - 'null'
-          description: The name of the media.
-        foreign_landing_url:
+          readOnly: true
+          description: The URL to a logo for the source.
+          deprecated: true
+        media_count:
+          type: integer
+          readOnly: true
+          description: The number of media items indexed from the source.
+      required:
+      - display_name
+      - logo_url
+      - media_count
+      - source_name
+      - source_url
+    Tag:
+      type: object
+      description: This output serializer serializes a singular tag.
+      properties:
+        name:
+          type: string
+          description: The name of a detailed tag.
+        accuracy:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
           type:
           - string
           - 'null'
-          description: The landing page of the work.
-        creator:
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
+      required:
+      - name
+      - unstable__provider
+    AudioReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
           type:
           - string
           - 'null'
-          description: The name of the media creator.
-        creator_url:
-          type:
-          - string
-          - 'null'
-          description: A direct link to the media creator.
-          maxLength: 2000
-        url:
-          type:
-          - string
-          - 'null'
-          description: The actual URL to the media file.
-          maxLength: 1000
-        filesize:
-          type:
-          - integer
-          - 'null'
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Number in bytes, e.g. 1024.
-        filetype:
-          type:
-          - string
-          - 'null'
-          description: The type of the file, related to the file extension.
-          maxLength: 80
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
     Audio:
       type: object
       description: A single audio file. Used in search results.
@@ -1431,65 +1450,6 @@ components:
       - tags
       - thumbnail
       - waveform
-    AuthenticationFailed:
-      title: AuthenticationFailed
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    Tag:
-      type: object
-      description: This output serializer serializes a singular tag.
-      properties:
-        name:
-          type: string
-          description: The name of a detailed tag.
-        accuracy:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
-        unstable__provider:
-          type:
-          - string
-          - 'null'
-          title: provider
-          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
-      required:
-      - name
-      - unstable__provider
-    Source:
-      type: object
-      properties:
-        source_name:
-          type: string
-          description: The source of the media, e.g. flickr
-        display_name:
-          type: string
-          description: The name of content source, e.g. Flickr
-        source_url:
-          type: string
-          format: uri
-          description: The URL of the source, e.g. https://www.flickr.com
-        logo_url:
-          type:
-          - string
-          - 'null'
-          readOnly: true
-          description: The URL to a logo for the source.
-          deprecated: true
-        media_count:
-          type: integer
-          readOnly: true
-          description: The number of media items indexed from the source.
-      required:
-      - display_name
-      - logo_url
-      - media_count
-      - source_name
-      - source_url
     ReasonEnum:
       enum:
       - mature
@@ -1501,34 +1461,30 @@ components:
         * `dmca` - dmca
 
         * `other` - other'
-    AudioAltFile:
+    AuthenticationFailed:
+      title: AuthenticationFailed
       type: object
-      description: 'A set of alternative files for a single audio object,
-
-        rendered as a part of the ``AudioSerializer`` output.'
       properties:
-        url:
+        detail:
           type: string
-          format: uri
-          description: URL of the alternative file.
-        bit_rate:
-          type: integer
-          minimum: 0
-          description: Bit rate of the alternative file.
-        filesize:
-          type: integer
-          minimum: 0
-          description: Size of the alternative file in bytes.
-        filetype:
+          description: A description of what went wrong.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        detail:
           type: string
-          description: File type of the alternative file.
-        sample_rate:
-          type: integer
-          minimum: 0
-          description: Sample rate of the alternative file.
-      required:
-      - filetype
-      - url
+          description: A description of what went wrong.
+    ValidationError:
+      title: ValidationError
+      type: object
+      properties:
+        detail:
+          oneOf:
+          - type: string
+            description: A description of what went wrong.
+          - type: object
+            additionalProperties: true
     NotAuthenticated:
       title: NotAuthenticated
       type: object
@@ -1536,6 +1492,50 @@ components:
         detail:
           type: string
           description: A description of what went wrong.
+    AudioSet:
+      type: object
+      description: An audio set, rendered as a part of the ``AudioSerializer`` output.
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          description: The name of the media.
+        foreign_landing_url:
+          type:
+          - string
+          - 'null'
+          description: The landing page of the work.
+        creator:
+          type:
+          - string
+          - 'null'
+          description: The name of the media creator.
+        creator_url:
+          type:
+          - string
+          - 'null'
+          description: A direct link to the media creator.
+          maxLength: 2000
+        url:
+          type:
+          - string
+          - 'null'
+          description: The actual URL to the media file.
+          maxLength: 1000
+        filesize:
+          type:
+          - integer
+          - 'null'
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Number in bytes, e.g. 1024.
+        filetype:
+          type:
+          - string
+          - 'null'
+          description: The type of the file, related to the file extension.
+          maxLength: 80
   securitySchemes:
     Openverse_API_Token:
       type: http

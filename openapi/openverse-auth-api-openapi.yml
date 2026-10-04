@@ -255,6 +255,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GrantTypeEnum:
+      enum:
+      - client_credentials
+      type: string
+      description: '* `client_credentials` - client_credentials'
+    OAuth2Registration:
+      type: object
+      properties:
+        name:
+          type: string
+          description: A unique human-readable name for your application or project requiring access to the Openverse API.
+          maxLength: 150
+        description:
+          type: string
+          description: A description of what you are trying to achieve with your project using the API. Please provide as much detail as possible!
+          maxLength: 10000
+        email:
+          type: string
+          format: email
+          description: A valid email that we can reach you at if we have any questions about your use case or data consumption.
+          maxLength: 254
+      required:
+      - description
+      - email
+      - name
     APIException:
       title: APIException
       type: object
@@ -262,30 +287,6 @@ components:
         detail:
           type: string
           description: A description of what went wrong.
-    OAuth2KeyInfo:
-      type: object
-      properties:
-        requests_this_minute:
-          type:
-          - integer
-          - 'null'
-          description: The number of requests your key has performed in the last minute.
-        requests_today:
-          type:
-          - integer
-          - 'null'
-          description: The number of requests your key has performed in the last day.
-        rate_limit_model:
-          type: string
-          description: The type of rate limit applied to your key. Can be 'standard' or 'enhanced'; enhanced users enjoy higher rate limits than their standard key counterparts. Contact Openverse if you need a higher rate limit.
-        verified:
-          type: boolean
-          description: Whether the application has verified the submitted email address.
-      required:
-      - rate_limit_model
-      - requests_this_minute
-      - requests_today
-      - verified
     ValidationError:
       title: ValidationError
       type: object
@@ -315,26 +316,6 @@ components:
       - client_id
       - client_secret
       - grant_type
-    OAuth2Registration:
-      type: object
-      properties:
-        name:
-          type: string
-          description: A unique human-readable name for your application or project requiring access to the Openverse API.
-          maxLength: 150
-        description:
-          type: string
-          description: A description of what you are trying to achieve with your project using the API. Please provide as much detail as possible!
-          maxLength: 10000
-        email:
-          type: string
-          format: email
-          description: A valid email that we can reach you at if we have any questions about your use case or data consumption.
-          maxLength: 254
-      required:
-      - description
-      - email
-      - name
     OAuth2Token:
       type: object
       description: 'Serializes the response for an access token.
@@ -359,11 +340,37 @@ components:
       - expires_in
       - scope
       - token_type
-    GrantTypeEnum:
-      enum:
-      - client_credentials
-      type: string
-      description: '* `client_credentials` - client_credentials'
+    OAuth2KeyInfo:
+      type: object
+      properties:
+        requests_this_minute:
+          type:
+          - integer
+          - 'null'
+          description: The number of requests your key has performed in the last minute.
+        requests_today:
+          type:
+          - integer
+          - 'null'
+          description: The number of requests your key has performed in the last day.
+        rate_limit_model:
+          type: string
+          description: The type of rate limit applied to your key. Can be 'standard' or 'enhanced'; enhanced users enjoy higher rate limits than their standard key counterparts. Contact Openverse if you need a higher rate limit.
+        verified:
+          type: boolean
+          description: Whether the application has verified the submitted email address.
+      required:
+      - rate_limit_model
+      - requests_this_minute
+      - requests_today
+      - verified
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
     OAuth2Application:
       type: object
       properties:
@@ -384,13 +391,6 @@ components:
       - client_secret
       - msg
       - name
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
   securitySchemes:
     Openverse_API_Token:
       type: http
