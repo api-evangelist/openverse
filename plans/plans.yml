@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Openverse API Plans
 description: >
   The Openverse API is free to use with no paid tiers. Access is available
@@ -67,3 +71,32 @@ plans:
       - Must be approved by Openverse team
       - Not available via self-service registration
       - Subject to ongoing review
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - period
+  plans:
+  - name: Anonymous
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Standard (Authenticated)
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
+  - name: Enhanced (By Request)
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - period
+    periods: []
