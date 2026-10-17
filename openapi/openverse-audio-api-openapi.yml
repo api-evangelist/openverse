@@ -1132,59 +1132,6 @@ components:
       required:
       - filetype
       - url
-    PaginatedAudioList:
-      type: object
-      properties:
-        result_count:
-          type: integer
-          description: The total number of items returned by search result.
-          example: 10000
-        page_count:
-          type: integer
-          description: The total number of pages returned by search result.
-          example: 20
-        page_size:
-          type: integer
-          description: The number of items per page.
-          example: 20
-        page:
-          type: integer
-          description: The current page number returned in the response.
-          example: 1
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Audio'
-        warnings:
-          type: array
-          items:
-            type: object
-          description: Warnings pertinent to the request. If there are no warnings, this property will not be present on the response. Warnings are non-critical problems with the request. Responses with warnings should be treated as unstable. Warning descriptions must not be treated as machine readable and their schema can change at any time.
-          example:
-          - code: partially invalid request parameter
-            message: Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.
-      required:
-      - page_count
-      - page_size
-      - page
-      - results
-      - result_count
-    AudioWaveform:
-      type: object
-      properties:
-        len:
-          type: integer
-          readOnly: true
-        points:
-          type: array
-          items:
-            type: number
-            format: double
-            maximum: 1
-            minimum: 0
-      required:
-      - len
-      - points
     Source:
       type: object
       properties:
@@ -1215,55 +1162,22 @@ components:
       - media_count
       - source_name
       - source_url
-    Tag:
-      type: object
-      description: This output serializer serializes a singular tag.
-      properties:
-        name:
-          type: string
-          description: The name of a detailed tag.
-        accuracy:
-          type:
-          - number
-          - 'null'
-          format: double
-          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
-        unstable__provider:
-          type:
-          - string
-          - 'null'
-          title: provider
-          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
-      required:
-      - name
-      - unstable__provider
-    AudioReportRequest:
+    AudioWaveform:
       type: object
       properties:
-        identifier:
-          type: string
-          format: uuid
-          description: Our unique identifier for an open-licensed work.
-        reason:
-          allOf:
-          - $ref: '#/components/schemas/ReasonEnum'
-          description: 'The reason to report media to Openverse.
-
-
-            * `mature` - mature
-
-            * `dmca` - dmca
-
-            * `other` - other'
-        description:
-          type:
-          - string
-          - 'null'
-          description: The explanation on why media is being reported.
-          maxLength: 500
+        len:
+          type: integer
+          readOnly: true
+        points:
+          type: array
+          items:
+            type: number
+            format: double
+            maximum: 1
+            minimum: 0
       required:
-      - identifier
-      - reason
+      - len
+      - points
     Audio:
       type: object
       description: A single audio file. Used in search results.
@@ -1450,26 +1364,8 @@ components:
       - tags
       - thumbnail
       - waveform
-    ReasonEnum:
-      enum:
-      - mature
-      - dmca
-      - other
-      type: string
-      description: '* `mature` - mature
-
-        * `dmca` - dmca
-
-        * `other` - other'
-    AuthenticationFailed:
-      title: AuthenticationFailed
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    NotFound:
-      title: NotFound
+    NotAuthenticated:
+      title: NotAuthenticated
       type: object
       properties:
         detail:
@@ -1485,13 +1381,110 @@ components:
             description: A description of what went wrong.
           - type: object
             additionalProperties: true
-    NotAuthenticated:
-      title: NotAuthenticated
+    NotFound:
+      title: NotFound
       type: object
       properties:
         detail:
           type: string
           description: A description of what went wrong.
+    AudioReportRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+          format: uuid
+          description: Our unique identifier for an open-licensed work.
+        reason:
+          allOf:
+          - $ref: '#/components/schemas/ReasonEnum'
+          description: 'The reason to report media to Openverse.
+
+
+            * `mature` - mature
+
+            * `dmca` - dmca
+
+            * `other` - other'
+        description:
+          type:
+          - string
+          - 'null'
+          description: The explanation on why media is being reported.
+          maxLength: 500
+      required:
+      - identifier
+      - reason
+    PaginatedAudioList:
+      type: object
+      properties:
+        result_count:
+          type: integer
+          description: The total number of items returned by search result.
+          example: 10000
+        page_count:
+          type: integer
+          description: The total number of pages returned by search result.
+          example: 20
+        page_size:
+          type: integer
+          description: The number of items per page.
+          example: 20
+        page:
+          type: integer
+          description: The current page number returned in the response.
+          example: 1
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Audio'
+        warnings:
+          type: array
+          items:
+            type: object
+          description: Warnings pertinent to the request. If there are no warnings, this property will not be present on the response. Warnings are non-critical problems with the request. Responses with warnings should be treated as unstable. Warning descriptions must not be treated as machine readable and their schema can change at any time.
+          example:
+          - code: partially invalid request parameter
+            message: Some of the request parameters were bad, but we were able to process the request. Here's some information that might help you fix the problem for future requests.
+      required:
+      - page_count
+      - page_size
+      - page
+      - results
+      - result_count
+    ReasonEnum:
+      enum:
+      - mature
+      - dmca
+      - other
+      type: string
+      description: '* `mature` - mature
+
+        * `dmca` - dmca
+
+        * `other` - other'
+    Tag:
+      type: object
+      description: This output serializer serializes a singular tag.
+      properties:
+        name:
+          type: string
+          description: The name of a detailed tag.
+        accuracy:
+          type:
+          - number
+          - 'null'
+          format: double
+          description: The accuracy of a machine-generated tag. Human-generated tags have a null accuracy field.
+        unstable__provider:
+          type:
+          - string
+          - 'null'
+          title: provider
+          description: The source of the tag. When this field matches the provider for the record, the tag originated from the upstream provider. Otherwise, the tag was added with an external machine-generated labeling processes.
+      required:
+      - name
+      - unstable__provider
     AudioSet:
       type: object
       description: An audio set, rendered as a part of the ``AudioSerializer`` output.
@@ -1536,6 +1529,13 @@ components:
           - 'null'
           description: The type of the file, related to the file extension.
           maxLength: 80
+    AuthenticationFailed:
+      title: AuthenticationFailed
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
   securitySchemes:
     Openverse_API_Token:
       type: http

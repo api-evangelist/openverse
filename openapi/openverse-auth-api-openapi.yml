@@ -255,11 +255,52 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GrantTypeEnum:
-      enum:
-      - client_credentials
-      type: string
-      description: '* `client_credentials` - client_credentials'
+    OAuth2TokenRequest:
+      type: object
+      description: 'Serializes a request for an access token.
+
+
+        This is a dummy serializer for OpenAPI and is not actually used.'
+      properties:
+        client_id:
+          type: string
+          description: The unique, public identifier of your application.
+        client_secret:
+          type: string
+          description: The secret key used to authenticate your application.
+        grant_type:
+          $ref: '#/components/schemas/GrantTypeEnum'
+      required:
+      - client_id
+      - client_secret
+      - grant_type
+    OAuth2Application:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The unique, public identifier of your application.
+        client_secret:
+          type: string
+          description: The secret key used to authenticate your application.
+        name:
+          type: string
+          description: The name of your application or project.
+        msg:
+          type: string
+          description: Some additional information about the application.
+      required:
+      - client_id
+      - client_secret
+      - msg
+      - name
+    NotAuthenticated:
+      title: NotAuthenticated
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
     OAuth2Registration:
       type: object
       properties:
@@ -280,13 +321,6 @@ components:
       - description
       - email
       - name
-    APIException:
-      title: APIException
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
     ValidationError:
       title: ValidationError
       type: object
@@ -297,25 +331,6 @@ components:
             description: A description of what went wrong.
           - type: object
             additionalProperties: true
-    OAuth2TokenRequest:
-      type: object
-      description: 'Serializes a request for an access token.
-
-
-        This is a dummy serializer for OpenAPI and is not actually used.'
-      properties:
-        client_id:
-          type: string
-          description: The unique, public identifier of your application.
-        client_secret:
-          type: string
-          description: The secret key used to authenticate your application.
-        grant_type:
-          $ref: '#/components/schemas/GrantTypeEnum'
-      required:
-      - client_id
-      - client_secret
-      - grant_type
     OAuth2Token:
       type: object
       description: 'Serializes the response for an access token.
@@ -340,6 +355,13 @@ components:
       - expires_in
       - scope
       - token_type
+    APIException:
+      title: APIException
+      type: object
+      properties:
+        detail:
+          type: string
+          description: A description of what went wrong.
     OAuth2KeyInfo:
       type: object
       properties:
@@ -364,33 +386,11 @@ components:
       - requests_this_minute
       - requests_today
       - verified
-    NotAuthenticated:
-      title: NotAuthenticated
-      type: object
-      properties:
-        detail:
-          type: string
-          description: A description of what went wrong.
-    OAuth2Application:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The unique, public identifier of your application.
-        client_secret:
-          type: string
-          description: The secret key used to authenticate your application.
-        name:
-          type: string
-          description: The name of your application or project.
-        msg:
-          type: string
-          description: Some additional information about the application.
-      required:
-      - client_id
-      - client_secret
-      - msg
-      - name
+    GrantTypeEnum:
+      enum:
+      - client_credentials
+      type: string
+      description: '* `client_credentials` - client_credentials'
   securitySchemes:
     Openverse_API_Token:
       type: http
