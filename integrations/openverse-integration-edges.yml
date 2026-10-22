@@ -1,0 +1,24 @@
+generated: '2026-10-22'
+method: searched
+checked:
+- raycast/integrations/raycast-integration-edges.yml
+source:
+- raycast/integrations/raycast-integration-edges.yml
+edges:
+- partner_name: Raycast (raycast-store)
+  partner: raycast
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: raycast-store
+  evidence: https://www.raycast.com/openverse/openverse
+  mirror_of: raycast/integrations/raycast-integration-edges.yml
+  apps:
+  - Openverse
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Raycast Store extension (first-party)
