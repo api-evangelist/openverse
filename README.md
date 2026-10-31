@@ -64,65 +64,194 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Openverse is a search engine providing programmatic access to the world's largest openly-licensed media catalog, covering 800M+ images and audio tracks from cultural institutions, museums, and creative commons sources.
+Openverse is a search engine providing programmatic access to the world's largest openly-licensed media catalog, covering 800M+ images and audio tracks from cultural institutions, museums, and creative commons sources including Flickr, Wikimedia Commons, iNaturalist, Europeana, Freesound, Jamendo, and more. Built by WordPress/Automattic under Creative Commons licensing principles.
 
-## API
+**Areas:** Image · Audio · Creative Commons · Open Media · Search · Open Data · Cultural Heritage · Museums
 
-**Base URL:** `https://api.openverse.org/v1`
+## Openverse on APIs.io
 
-**Documentation:** https://docs.openverse.org/
+Everything profiled for Openverse is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/openverse/](https://apis.io/providers/openverse/)** — or go straight to one of the APIs or properties below.
 
-**OpenAPI Spec:** https://api.openverse.org/v1/schema/?format=json
+### APIs (3)
 
-### Key Endpoints
+- [Openverse Audio API](https://apis.io/apis/openverse/openverse-audio-api/) — These are endpoints pertaining to audio files.
+- [Openverse Auth API](https://apis.io/apis/openverse/openverse-auth-api/) — Openverse provides free and open access to the Openverse API to anonymous and registered users. [Refer to the API documentation site for information on how…
+- [Openverse Images API](https://apis.io/apis/openverse/openverse-images-api/) — These are endpoints pertaining to images.
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/v1/images/` | GET | Search openly-licensed images |
-| `/v1/images/{identifier}/` | GET | Retrieve image by UUID |
-| `/v1/images/{identifier}/related/` | GET | Find related images |
-| `/v1/images/{identifier}/thumb/` | GET | Download image thumbnail |
-| `/v1/images/stats/` | GET | List image sources with counts |
-| `/v1/audio/` | GET | Search openly-licensed audio |
-| `/v1/audio/{identifier}/` | GET | Retrieve audio track by UUID |
-| `/v1/audio/{identifier}/related/` | GET | Find related audio |
-| `/v1/audio/{identifier}/thumb/` | GET | Download audio artwork thumbnail |
-| `/v1/audio/{identifier}/waveform/` | GET | Get waveform peak data |
-| `/v1/audio/stats/` | GET | List audio sources with counts |
-| `/v1/auth_tokens/register/` | POST | Register an OAuth2 application |
-| `/v1/auth_tokens/token/` | POST | Exchange credentials for access token |
+### Published properties
 
-### Authentication
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Openverse supports both anonymous and authenticated access:
+#### Agentic access (1)
 
-- **Anonymous:** No key needed; limited to 1 req/sec, max 20 results per page
-- **Authenticated (Standard):** Register at `/v1/auth_tokens/register/` to obtain OAuth2 credentials; higher rate limits and up to 500 results per page
-- **Enhanced:** By approval from the Openverse team for high-volume integrations
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Media Sources
+- [Openverse Agentic Access](https://apis.io/agentic-access/openverse/openverse-agentic-access/)
 
-**Images (800M+):**
-- Flickr: 535M+
-- iNaturalist: 266M+
-- Wikimedia Commons: 87M+
-- Europeana: 13M+
-- Metropolitan Museum of Art, NASA, Smithsonian, Rijksmuseum, and 40+ more
+#### JSON Schema (26)
 
-**Audio (~5M):**
-- Wikimedia Commons: 3.88M+
-- Jamendo: 627K+
-- Freesound: 587K+
+The data models the API reads and writes.
 
-### Pricing
+- [APIException](https://apis.io/schemas/openverse/apiexception/)
+- [Audio](https://apis.io/schemas/openverse/audio/)
+- [AudioAltFile](https://apis.io/schemas/openverse/audioaltfile/)
+- [AudioReportRequest](https://apis.io/schemas/openverse/audioreportrequest/)
+- [AudioSet](https://apis.io/schemas/openverse/audioset/)
+- [AudioWaveform](https://apis.io/schemas/openverse/audiowaveform/)
+- [AuthenticationFailed](https://apis.io/schemas/openverse/authenticationfailed/)
+- [GrantTypeEnum](https://apis.io/schemas/openverse/granttypeenum/)
+- [Image](https://apis.io/schemas/openverse/image/)
+- [ImageReportRequest](https://apis.io/schemas/openverse/imagereportrequest/)
+- [NotAuthenticated](https://apis.io/schemas/openverse/notauthenticated/)
+- [NotFound](https://apis.io/schemas/openverse/notfound/)
+- [OAuth2Application](https://apis.io/schemas/openverse/oauth2application/)
+- [OAuth2KeyInfo](https://apis.io/schemas/openverse/oauth2keyinfo/)
+- [OAuth2Registration](https://apis.io/schemas/openverse/oauth2registration/)
+- [OAuth2Token](https://apis.io/schemas/openverse/oauth2token/)
+- [OAuth2TokenRequest](https://apis.io/schemas/openverse/oauth2tokenrequest/)
+- [Oembed](https://apis.io/schemas/openverse/oembed/)
+- [PaginatedAudioList](https://apis.io/schemas/openverse/paginatedaudiolist/)
+- [PaginatedImageList](https://apis.io/schemas/openverse/paginatedimagelist/)
+- [ReasonEnum](https://apis.io/schemas/openverse/reasonenum/)
+- [Source](https://apis.io/schemas/openverse/source/)
+- [Tag](https://apis.io/schemas/openverse/tag/)
+- [TypeEnum](https://apis.io/schemas/openverse/typeenum/)
+- [ValidationError](https://apis.io/schemas/openverse/validationerror/)
+- …and 1 more published on APIs.io
 
-The API is free with no paid plans. See [finops/finops.yml](finops/finops.yml) for details.
+#### JSON-LD (2)
 
-## Resources
+Linked-data contexts for the provider's vocabulary.
 
-- [Plans](plans/plans.yml)
-- [Rate Limits](rate-limits/rate-limits.yml)
-- [FinOps](finops/finops.yml)
-- [GitHub Repository](https://github.com/WordPress/openverse)
-- [Terms of Service](https://wordpress.github.io/openverse-api/terms_of_service.html)
-- [JavaScript Client](https://www.npmjs.com/package/@openverse/api-client)
+- [context Context](https://apis.io/jsonld/openverse/context/)
+- [Openverse Context](https://apis.io/jsonld/openverse/openverse/)
+
+#### Examples (50)
+
+Example requests and responses.
+
+- [Audio_Detail_200](https://apis.io/examples/openverse/audio_detail_200/)
+- [Audio_Detail_401](https://apis.io/examples/openverse/audio_detail_401/)
+- [Audio_Detail_404](https://apis.io/examples/openverse/audio_detail_404/)
+- [Audio_Related_200](https://apis.io/examples/openverse/audio_related_200/)
+- [Audio_Related_401](https://apis.io/examples/openverse/audio_related_401/)
+- [Audio_Related_404](https://apis.io/examples/openverse/audio_related_404/)
+- [Audio_Report_201](https://apis.io/examples/openverse/audio_report_201/)
+- [Audio_Report_400](https://apis.io/examples/openverse/audio_report_400/)
+- [Audio_Report_401](https://apis.io/examples/openverse/audio_report_401/)
+- [Audio_Report_404](https://apis.io/examples/openverse/audio_report_404/)
+- [Audio_Search_200](https://apis.io/examples/openverse/audio_search_200/)
+- [Audio_Search_400](https://apis.io/examples/openverse/audio_search_400/)
+- [Audio_Search_401](https://apis.io/examples/openverse/audio_search_401/)
+- [Audio_Stats_401](https://apis.io/examples/openverse/audio_stats_401/)
+- [Audio_Thumb_401_Stub](https://apis.io/examples/openverse/audio_thumb_401_stub/)
+- [Audio_Thumb_404_Stub](https://apis.io/examples/openverse/audio_thumb_404_stub/)
+- [Audio_Waveform_200](https://apis.io/examples/openverse/audio_waveform_200/)
+- [Audio_Waveform_401](https://apis.io/examples/openverse/audio_waveform_401/)
+- [Audio_Waveform_404](https://apis.io/examples/openverse/audio_waveform_404/)
+- [Images_Detail_200](https://apis.io/examples/openverse/images_detail_200/)
+- [Images_Detail_401](https://apis.io/examples/openverse/images_detail_401/)
+- [Images_Detail_404](https://apis.io/examples/openverse/images_detail_404/)
+- [Images_Oembed_200](https://apis.io/examples/openverse/images_oembed_200/)
+- [Images_Oembed_400](https://apis.io/examples/openverse/images_oembed_400/)
+- [Images_Oembed_401](https://apis.io/examples/openverse/images_oembed_401/)
+- …and 25 more published on APIs.io
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Openverse audio API](https://apis.io/collections/openverse/open-openverse-audio-api/)
+- [Openverse audio auth API](https://apis.io/collections/openverse/open-openverse-auth-api/)
+- [Openverse audio images API](https://apis.io/collections/openverse/open-openverse-images-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Openverse — jsonschema rules](https://apis.io/rules/openverse/openverse-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Openverse Authentication](https://apis.io/security/openverse/openverse-authentication/)
+- [Openverse Domain Security](https://apis.io/security/openverse/openverse-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/openverse/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/openverse/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/openverse/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://openverse.org)
+- [Blog](https://make.wordpress.org/openverse/feed/)
+
+## API Evangelist rating
+
+**Kin Score 33.8** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 54.8 |
+| Contract governance | 9.8 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 28.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/openverse/](https://apis.io/providers/openverse/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Openverse: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/openverse/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
